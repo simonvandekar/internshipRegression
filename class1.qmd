@@ -1,0 +1,205 @@
+---
+title: "Class 1"
+---
+
+
+## Objectives
+
+* Introductions
+* Understand the concepts of linear regression
+* Know how to interpret regression coefficients
+
+
+## Goals
+
+We will use linear regression to analyze the FEV dataset.
+
+## Introductions
+
+* What is your name, year, major, goal for post graduation (ok if you don't know yet)?
+* What is your experience with math/`R`? How about Rstudio?
+* Discuss internship projects, so far.
+
+
+## Simple linear regression
+
+- **Definition:**
+  - Simple linear regression is a statistical method used to model the relationship between two variables by fitting a linear equation to observed data.
+
+- **Equation:**
+  - The equation for a simple linear regression is:  
+    $$
+    Y = \beta_0 + \beta_1 X + \epsilon
+    $$
+  - $Y$: Dependent variable (outcome)
+  - $X$: Independent variable (predictor)
+  - $\beta_0$: Intercept (value of $Y$ when $X = 0$)
+  - $\beta_1$: Slope (change in $Y$ for a one-unit change in $X$)
+  - $\epsilon$: Error term (captures variability not explained by the model)
+
+- **Goal:**
+  - To estimate the coefficients ($\beta_0$ and $\beta_1$) that quantify the association of $Y$ and $X$.
+
+- **Interpretation:**
+  - **Intercept ($\beta_0$)**: The expected value (mean) of $Y$ when $X$ is zero.
+  - **Slope ($\beta_1$)**: Represents the average change in $Y$ for each one-unit increase in $X$.
+
+
+
+
+
+### Example: FEV and Smoking
+
+The code below loads in the data. Forced Expiratory Volume (FEV), is a lung function test that measures how much air a person can exhale during a forced breath.
+
+```{r loadData}
+fev = read.csv('Datasets/FEV.csv')
+fev$smoke = relevel(as.factor(fev$smoke), ref='non-current smoker')
+```
+
+**Exercise:** Create a plot showing a histogram of the FEV variable.
+
+
+#### Boxplot visualization
+
+This is a visualization of the association between FEV and smoking status before fitting a linear regression.
+
+```{r boxplot}
+library(ggplot2)
+ggplot(fev, aes(x = smoke, y = fev)) +
+  geom_boxplot() +
+  labs(title = "FEV by smoking status", x = "Smoking status", y = "FEV")
+```
+
+
+
+* How can we test whether FEV is different between "non-current smoker" and "current smoker"?
+* The variable smoking status is our $X$ variable and FEV is our $Y$ variable. $X$ is a categorical variable, how can we code $X$ for this model?
+
+
+**Exercise:** Perform a t-test of smoking status. Set the option `var.equal = TRUE`. Interpret the results of all the output.
+
+#### Fitting the linear regression model
+
+
+
+* The code below fits two models in R. What are they doing?
+* What output below looks familiar to you? Interpret the results.
+
+```{r smokingModel}
+# Fit linear regression with factor variable
+model_factor <- lm(fev ~ smoke, data = fev)
+summary(model_factor)
+
+# Fit linear regression with binary variable
+fev$smoke_binary <- ifelse(fev$smoke == "current smoker", 1, 0)
+model_binary <- lm(fev ~ smoke_binary, data = fev)
+summary(model_binary)
+```
+
+#### Creating visualizations
+
+The following code creates a nice table output that you would want to put in a report for your projects.
+
+```{r prettyTable}
+library(sjPlot)
+
+# Create a results table 
+tab_model(model_factor)
+```
+
+
+
+Next, we plot the results from the model to see what the fitted model looks like.
+
+```{r modelPlot}
+library(emmeans)
+
+# Estimated means
+means <- emmeans(model_factor, ~ smoke)
+
+# Scatter plot of estimated means
+library(ggplot2)
+
+plot_data <- as.data.frame(means)
+ggplot(plot_data, aes(x = smoke, y = emmean)) +
+  geom_point(size = 4) +
+  geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL), width = 0.2) +
+  geom_point(data = fev, aes(x = smoke, y = fev), alpha = 0.5, position = position_dodge(width = 0.4)) +
+  # example with jitter, comment out the other line
+  #geom_jitter(data = fev, aes(x = smoke, y = fev), alpha = 0.5) +
+  labs(title = "Estimated Means with FEV", x = "Smoking status", y = "Estimated Mean FEV")
+```
+
+
+
+
+To analyze the effect of a continuous variable "age" using simple linear regression, here's a similar structure as you provided for the categorical variable "smoke" while focusing on "age":
+
+### Example: FEV and Age
+
+Performs data analysis of (FEV) with respect to age:
+
+#### Scatter Plot Visualization
+
+This is a visualization of the association between FEV and age before fitting a linear regression.
+
+```{r}
+# Scatter plot of FEV by age
+ggplot(fev, aes(x = age, y = fev)) +
+  geom_point(alpha = 0.5) +
+  labs(title = "FEV by Age", x = "Age", y = "FEV")
+```
+
+* How can we test the relationship between FEV and age?
+* The variable age is our $X$ variable and FEV is our $Y$ variable. $X$ is a continuous variable. How can it be incorporated into the model?
+
+#### Fitting the Linear Regression Model
+
+* The code below fits the model in R. How does it show the relationship between FEV and age?
+* What output below looks familiar to you? Interpret the results.
+
+```{r}
+# Fit linear regression with age as the predictor
+model_age <- lm(fev ~ age, data = fev)
+```
+
+#### Creating Visualizations
+
+The following code creates a nice table output that you would want for your report:
+
+```{r}
+# Create a results table 
+tab_model(model_age)
+```
+
+Next, we plot the results from the model to see what the relationship looks like:
+
+```{r}
+# Estimated regression line
+ageGrid = ref_grid(model_age, at=list(age=seq(min(fev$age), max(fev$age), length.out=100)) )
+predictions <- emmeans(ageGrid, ~age)
+
+# Prepare data for plotting
+pred_plot_data <- as.data.frame(predictions)
+
+# Scatter plot with regression line
+ggplot() +
+  geom_point(data = fev, aes(x = age, y = fev), alpha = 0.5) +
+  geom_ribbon(data = pred_plot_data, aes(x = age, ymin = lower.CL, ymax = upper.CL), alpha = 0.7, fill = "grey") +
+  geom_line(data = pred_plot_data, aes(x = age, y = emmean), color = "red", linewidth = 1) +
+  labs(title = "FEV vs. Age with Regression Line", x = "Age", y = "FEV")
+```
+
+This setup analyzes the effect of the continuous variable "age" on FEV using simple linear regression, from fitting the model to visualizing the results. Adjust the dataset path and specifics according to your actual data and requirements.
+
+
+### Assumptions
+
+* What are some assumptions we've made here?
+
+1. Linearity
+2. Homoskedasticity
+3. Normality (sort of)
+
+## Multiple regression

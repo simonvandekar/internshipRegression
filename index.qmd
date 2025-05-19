@@ -1,0 +1,31 @@
+---
+title:  "Vanderbilt Biostatistics Summer Internship: Regression"
+---
+
+This is a series of five 90 minute lectures taught by [Simon](http://simonvandekar.github.io) as part of the Department of Biostatistics Summer Internship at Vanderbilt University. The course is part two of a 10 day series to introduce undergraduate students interested in medical science, biology, and mathematics to Biostatistical methods.
+
+# Syllabus (Tentative)
+
+## Class 6
+
+Objectives:
+
+1.  Introductions
+2.  Understand the concepts of linear regression
+3.  Know how to interpret regression coefficients
+
+## Day 7
+
+Objectives:
+
+## Day 8
+
+Objectives:
+
+## Day 9
+
+Objectives:
+
+## Day 10
+
+Objectives:
