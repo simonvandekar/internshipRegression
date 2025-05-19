@@ -1,0 +1,93 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Vanderbilt Biostatistics Summer Internship: Regression",
+    "section": "",
+    "text": "This is a series of five 90 minute lectures taught by Simon as part of the Department of Biostatistics Summer Internship at Vanderbilt University. The course is part two of a 10 day series to introduce undergraduate students interested in medical science, biology, and mathematics to Biostatistical methods."
+  },
+  {
+    "objectID": "index.html#class-6",
+    "href": "index.html#class-6",
+    "title": "Vanderbilt Biostatistics Summer Internship: Regression",
+    "section": "Class 6",
+    "text": "Class 6\nObjectives:\n\nIntroductions\nUnderstand the concepts of simple linear regression\nKnow how to interpret simple regression coefficients"
+  },
+  {
+    "objectID": "index.html#day-7",
+    "href": "index.html#day-7",
+    "title": "Vanderbilt Biostatistics Summer Internship: Regression",
+    "section": "Day 7",
+    "text": "Day 7\nObjectives:\n\nUnderstand the concepts of multiple regression\nKnow how to interpret multiple coefficients"
+  },
+  {
+    "objectID": "index.html#day-8",
+    "href": "index.html#day-8",
+    "title": "Vanderbilt Biostatistics Summer Internship: Regression",
+    "section": "Day 8",
+    "text": "Day 8\nObjectives:"
+  },
+  {
+    "objectID": "index.html#day-9",
+    "href": "index.html#day-9",
+    "title": "Vanderbilt Biostatistics Summer Internship: Regression",
+    "section": "Day 9",
+    "text": "Day 9\nObjectives:"
+  },
+  {
+    "objectID": "index.html#day-10",
+    "href": "index.html#day-10",
+    "title": "Vanderbilt Biostatistics Summer Internship: Regression",
+    "section": "Day 10",
+    "text": "Day 10\nObjectives:"
+  },
+  {
+    "objectID": "class1.html",
+    "href": "class1.html",
+    "title": "Class 1",
+    "section": "",
+    "text": "Introductions\nUnderstand the concepts of linear regression\nKnow how to interpret regression coefficients"
+  },
+  {
+    "objectID": "class1.html#objectives",
+    "href": "class1.html#objectives",
+    "title": "Class 1",
+    "section": "",
+    "text": "Introductions\nUnderstand the concepts of linear regression\nKnow how to interpret regression coefficients"
+  },
+  {
+    "objectID": "class1.html#goals",
+    "href": "class1.html#goals",
+    "title": "Class 1",
+    "section": "Goals",
+    "text": "Goals\nWe will use linear regression to analyze the FEV dataset."
+  },
+  {
+    "objectID": "class1.html#introductions",
+    "href": "class1.html#introductions",
+    "title": "Class 1",
+    "section": "Introductions",
+    "text": "Introductions\n\nWhat is your name, year, major, goal for post graduation (ok if you don’t know yet)?\nWhat is your experience with math/R? How about Rstudio?\nDiscuss internship projects, so far."
+  },
+  {
+    "objectID": "class1.html#simple-linear-regression",
+    "href": "class1.html#simple-linear-regression",
+    "title": "Class 1",
+    "section": "Simple linear regression",
+    "text": "Simple linear regression\n\nDefinition:\n\nSimple linear regression is a statistical method used to model the relationship between two variables by fitting a linear equation to observed data.\n\nEquation:\n\nThe equation for a simple linear regression is:\n\\[\nY = \\beta_0 + \\beta_1 X + \\epsilon\n\\]\n\\(Y\\): Dependent variable (outcome)\n\\(X\\): Independent variable (predictor)\n\\(\\beta_0\\): Intercept (value of \\(Y\\) when \\(X = 0\\))\n\\(\\beta_1\\): Slope (change in \\(Y\\) for a one-unit change in \\(X\\))\n\\(\\epsilon\\): Error term (captures variability not explained by the model)\n\nGoal:\n\nTo estimate the coefficients (\\(\\beta_0\\) and \\(\\beta_1\\)) that quantify the association of \\(Y\\) and \\(X\\).\n\nInterpretation:\n\nIntercept (\\(\\beta_0\\)): The expected value (mean) of \\(Y\\) when \\(X\\) is zero.\nSlope (\\(\\beta_1\\)): Represents the average change in \\(Y\\) for each one-unit increase in \\(X\\).\n\n\n\nExample: FEV and Smoking\nThe code below loads in the data. Forced Expiratory Volume (FEV), is a lung function test that measures how much air a person can exhale during a forced breath.\n\n\nCode\nfev = read.csv('Datasets/FEV.csv')\nfev$smoke = relevel(as.factor(fev$smoke), ref='non-current smoker')\n\n\nExercise: Create a plot showing a histogram of the FEV variable.\n\nBoxplot visualization\nThis is a visualization of the association between FEV and smoking status before fitting a linear regression.\n\n\nCode\nlibrary(ggplot2)\nggplot(fev, aes(x = smoke, y = fev)) +\n  geom_boxplot() +\n  labs(title = \"FEV by smoking status\", x = \"Smoking status\", y = \"FEV\")\n\n\n\n\n\n\nHow can we test whether FEV is different between “non-current smoker” and “current smoker”?\nThe variable smoking status is our \\(X\\) variable and FEV is our \\(Y\\) variable. \\(X\\) is a categorical variable, how can we code \\(X\\) for this model?\n\nExercise: Perform a t-test of smoking status. Set the option var.equal = TRUE. Interpret the results of all the output.\n\n\nFitting the linear regression model\n\nThe code below fits two models in R. What are they doing?\nWhat output below looks familiar to you? Interpret the results.\n\n\n\nCode\n# Fit linear regression with factor variable\nmodel_factor &lt;- lm(fev ~ smoke, data = fev)\nsummary(model_factor)\n\n\n\nCall:\nlm(formula = fev ~ smoke, data = fev)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-1.7751 -0.6339 -0.1021  0.4804  3.2269 \n\nCoefficients:\n                    Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)          2.56614    0.03466  74.037  &lt; 2e-16 ***\nsmokecurrent smoker  0.71072    0.10994   6.464 1.99e-10 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.8412 on 652 degrees of freedom\nMultiple R-squared:  0.06023,   Adjusted R-squared:  0.05879 \nF-statistic: 41.79 on 1 and 652 DF,  p-value: 1.993e-10\n\n\nCode\n# Fit linear regression with binary variable\nfev$smoke_binary &lt;- ifelse(fev$smoke == \"current smoker\", 1, 0)\nmodel_binary &lt;- lm(fev ~ smoke_binary, data = fev)\nsummary(model_binary)\n\n\n\nCall:\nlm(formula = fev ~ smoke_binary, data = fev)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-1.7751 -0.6339 -0.1021  0.4804  3.2269 \n\nCoefficients:\n             Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)   2.56614    0.03466  74.037  &lt; 2e-16 ***\nsmoke_binary  0.71072    0.10994   6.464 1.99e-10 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.8412 on 652 degrees of freedom\nMultiple R-squared:  0.06023,   Adjusted R-squared:  0.05879 \nF-statistic: 41.79 on 1 and 652 DF,  p-value: 1.993e-10\n\n\n\n\nCreating visualizations\nThe following code creates a nice table output that you would want to put in a report for your projects.\n\n\nCode\nlibrary(sjPlot)\n\n\nWarning: package 'sjPlot' was built under R version 4.4.1\n\n\nCode\n# Create a results table \ntab_model(model_factor)\n\n\n\n\n\n \nfev\n\n\nPredictors\nEstimates\nCI\np\n\n\n(Intercept)\n2.57\n2.50 – 2.63\n&lt;0.001\n\n\nsmoke [current smoker]\n0.71\n0.49 – 0.93\n&lt;0.001\n\n\nObservations\n654\n\n\nR2 / R2 adjusted\n0.060 / 0.059\n\n\n\n\n\n\n\nNext, we plot the results from the model to see what the fitted model looks like.\n\n\nCode\nlibrary(emmeans)\n\n\nWarning: package 'emmeans' was built under R version 4.4.1\n\n\nWelcome to emmeans.\nCaution: You lose important information if you filter this package's results.\nSee '? untidy'\n\n\nCode\n# Estimated means\nmeans &lt;- emmeans(model_factor, ~ smoke)\n\n# Scatter plot of estimated means\nlibrary(ggplot2)\n\nplot_data &lt;- as.data.frame(means)\nggplot(plot_data, aes(x = smoke, y = emmean)) +\n  geom_point(size = 4) +\n  geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL), width = 0.2) +\n  geom_point(data = fev, aes(x = smoke, y = fev), alpha = 0.5, position = position_dodge(width = 0.4)) +\n  # example with jitter, comment out the other line\n  #geom_jitter(data = fev, aes(x = smoke, y = fev), alpha = 0.5) +\n  labs(title = \"Estimated Means with FEV\", x = \"Smoking status\", y = \"Estimated Mean FEV\")\n\n\n\n\n\nTo analyze the effect of a continuous variable “age” using simple linear regression, here’s a similar structure as you provided for the categorical variable “smoke” while focusing on “age”:\n\n\n\nExample: FEV and Age\nPerforms data analysis of (FEV) with respect to age:\n\nScatter Plot Visualization\nThis is a visualization of the association between FEV and age before fitting a linear regression.\n\n\nCode\n# Scatter plot of FEV by age\nggplot(fev, aes(x = age, y = fev)) +\n  geom_point(alpha = 0.5) +\n  labs(title = \"FEV by Age\", x = \"Age\", y = \"FEV\")\n\n\n\n\n\n\nHow can we test the relationship between FEV and age?\nThe variable age is our \\(X\\) variable and FEV is our \\(Y\\) variable. \\(X\\) is a continuous variable. How can it be incorporated into the model?\n\n\n\nFitting the Linear Regression Model\n\nThe code below fits the model in R. How does it show the relationship between FEV and age?\nWhat output below looks familiar to you? Interpret the results.\n\n\n\nCode\n# Fit linear regression with age as the predictor\nmodel_age &lt;- lm(fev ~ age, data = fev)\n\n\n\n\nCreating Visualizations\nThe following code creates a nice table output that you would want for your report:\n\n\nCode\n# Create a results table \ntab_model(model_age)\n\n\n\n\n\n \nfev\n\n\nPredictors\nEstimates\nCI\np\n\n\n(Intercept)\n0.43\n0.28 – 0.58\n&lt;0.001\n\n\nage\n0.22\n0.21 – 0.24\n&lt;0.001\n\n\nObservations\n654\n\n\nR2 / R2 adjusted\n0.572 / 0.572\n\n\n\n\n\n\n\nNext, we plot the results from the model to see what the relationship looks like:\n\n\nCode\n# Estimated regression line\nageGrid = ref_grid(model_age, at=list(age=seq(min(fev$age), max(fev$age), length.out=100)) )\npredictions &lt;- emmeans(ageGrid, ~age)\n\n# Prepare data for plotting\npred_plot_data &lt;- as.data.frame(predictions)\n\n# Scatter plot with regression line\nggplot() +\n  geom_point(data = fev, aes(x = age, y = fev), alpha = 0.5) +\n  geom_ribbon(data = pred_plot_data, aes(x = age, ymin = lower.CL, ymax = upper.CL), alpha = 0.7, fill = \"grey\") +\n  geom_line(data = pred_plot_data, aes(x = age, y = emmean), color = \"red\", linewidth = 1) +\n  labs(title = \"FEV vs. Age with Regression Line\", x = \"Age\", y = \"FEV\")\n\n\n\n\n\nThis setup analyzes the effect of the continuous variable “age” on FEV using simple linear regression, from fitting the model to visualizing the results. Adjust the dataset path and specifics according to your actual data and requirements.\n\n\n\nAssumptions\n\nWhat are some assumptions we’ve made here?\n\n\nLinearity\nHomoskedasticity\nNormality (sort of)"
+  },
+  {
+    "objectID": "class1.html#multiple-regression",
+    "href": "class1.html#multiple-regression",
+    "title": "Class 1",
+    "section": "Multiple regression",
+    "text": "Multiple regression"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n\nCode\n1 + 1\n\n\n[1] 2"
+  }
+]
