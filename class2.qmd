@@ -1,0 +1,322 @@
+---
+title: "Class 2"
+---
+
+
+```{r setup, include=FALSE}
+# Global knitr options
+knitr::opts_chunk$set(
+  warning = FALSE, # Suppresses warnings
+  message = FALSE  # Suppresses messages
+)
+```
+
+# Objectives
+
+* Know how to interpret regression coefficients in multiple regression
+* Understand output from multiple regression
+  - Tests
+    * T-tests
+    * F-tests
+  - R-square
+* Understand assumptions of regression
+
+# Goals
+
+We will use linear regression to analyze the FEV dataset, again.
+
+# Multiple regression
+
+## Multiple covariates
+
+
+In multiple regression, the model includes multiple predictors. For example, with age and smoking status as covariates:
+
+$$
+\text{FEV} = \beta_0 + \beta_1 \times \text{age} + \beta_2 \times \text{smoke} + \epsilon
+$$
+
+Where:
+- $\beta_0$ is the intercept.
+- $\beta_1$ is the change in FEV for a one-unit change in age, holding smoke constant.
+- $\beta_2$ is the difference in FEV between smokers and non-smokers, holding age constant.
+
+## Example: Age and smoking
+
+* Specifying the model
+
+```{r}
+# Load the necessary libraries
+library(ggplot2)
+library(emmeans)
+library(sjPlot)
+
+# Load the dataset
+fev <- read.csv('Datasets/FEV.csv')
+
+# Convert smoking status to a factor
+fev$smoke <- factor(fev$smoke, levels = c('non-current smoker', 'current smoker'))
+
+# Specify and fit the model
+model <- lm(fev ~ age + smoke, data = fev)
+summary(model)
+
+tab_model(model)
+```
+
+**Exercise:** Interpret the coefficients as described above. Use the coefficients table output to discuss individual predictors.
+
+* Interpretation of tests
+
+```{r}
+library(kableExtra)
+# t-tests are part of the summary output, indicating significance of individual coefficients
+# F-tests assess the overall significance, frequently output in the summary table
+kable(anova(model), format='html', caption='ANOVA table', digits=2)
+```
+
+* Using `emmeans` or `effects` to plot age effects
+
+```{r}
+# Estimated regression line
+ageGrid = ref_grid(model, at=list(age=seq(min(fev$age), max(fev$age), length.out=100)) )
+predictions <- emmeans(ageGrid, ~age)
+
+# Prepare data for plotting
+pred_plot_data <- as.data.frame(predictions)
+
+# Scatter plot with regression line
+ggplot() +
+  geom_point(data = fev, aes(x = age, y = fev), alpha = 0.5) +
+  geom_ribbon(data = pred_plot_data, aes(x = age, ymin = lower.CL, ymax = upper.CL), alpha = 0.7, fill = "grey") +
+  geom_line(data = pred_plot_data, aes(x = age, y = emmean), color = "red", linewidth = 1) +
+  labs(title = "FEV vs. Age with Regression Line", x = "Age", y = "FEV")
+```
+
+* Using `emmeans` or `effects` to plot smoking effects
+
+```{r}
+library(emmeans)
+
+# Estimated means
+means <- emmeans(model, ~ smoke)
+
+# Scatter plot of estimated means
+library(ggplot2)
+
+plot_data <- as.data.frame(means)
+ggplot(plot_data, aes(x = smoke, y = emmean)) +
+  geom_point(size = 4) +
+  geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL), width = 0.2) +
+  #geom_point(data = fev, aes(x = smoke, y = fev), alpha = 0.5, position = position_dodge(width = 0.4)) +
+  # example with jitter, comment out the other line
+  #geom_jitter(data = fev, aes(x = smoke, y = fev), alpha = 0.5) +
+  labs(title = "Estimated Means with FEV", x = "Smoking status", y = "Estimated Mean FEV")
+```
+
+* Added variable plots are useful for visualizing the effect of one variable removing the effect of all the other variables
+* Here, it is interesting for visualizing the smoking effect
+
+## Example: Age, smoking, sex
+
+* Interpretation of parameter estimates
+
+**Exercise:** Add sex to the model, create the output using `summary` and `tab_model`, and interpret the coefficients for all variables.
+
+
+* Interpretation of tests
+
+**Exercise:** Create the anova table and discuss the results.
+
+
+## Regression Model with Interaction
+
+Consider a regression model:
+
+$$
+\text{FEV} = \beta_0 + \beta_1 \times \text{age} + \beta_2 \times \text{sex} + \beta_3 \times (\text{age} \times \text{sex}) + \epsilon
+$$
+
+Where:
+- $\text{sex}$ is a binary variable (0 for females, 1 for males).
+
+## Interpretation of Coefficients
+
+1. **$\beta_0$:** Intercept
+   - The expected FEV for females ($\text{sex} = 0$) when age is zero.
+
+2. **$\beta_1$:** Main effect of age
+   - The change in FEV associated with a one-unit increase in age for females ($\text{sex} = 0$).
+
+3. **$\beta_2$:** Main effect of sex
+   - The difference in expected FEV between males and females at age zero.
+
+4. **$\beta_3$:** Interaction term (age by sex)
+   - The additional change in the effect of age on FEV for males compared to females. This coefficient reflects how the effect of age on FEV differs between sexes.
+
+
+- **For Females ($\text{sex} = 0$):**
+
+  \[
+  \text{FEV} = \beta_0 + \beta_1 \times \text{age}
+  \]
+  The slope with respect to age is $\beta_1$.
+
+- **For Males ($\text{sex} = 1$):**
+
+  \[
+  \text{FEV} = (\beta_0 + \beta_2) + (\beta_1 + \beta_3) \times \text{age}
+  \]
+  The slope with respect to age is $\beta_1 + \beta_3$, indicating the modified effect of age for males.
+
+- The interaction term ($\beta_3$) alters the model by adding separate age effects for males and females. A significant $\beta_3$ suggests that the relationship between age and FEV differs between males and females.
+
+
+
+
+## Example: Age by sex interaction
+
+Now we investigate the interaction between age and smoking.
+
+```{r}
+# Model with interaction
+model_interaction <- lm(fev ~ age * sex, data = fev)
+summary(model_interaction)
+```
+
+* Interpretation of tests and type 2 sum of squares using `car::Anova`
+
+```{r}
+library(car)
+Anova(model_interaction, type = 2)
+```
+
+# Assumptions
+
+* What are some assumptions we've made here (and for what reason)?
+  1. Linearity
+  2. Homoskedasticity
+  3. Normality (sort of)
+
+
+# Evaluating model fit
+
+## R-square
+
+The R-square value in the model output helps us gauge how well our model explains the variability in the data.
+
+## Diagnostic plots for `lm`
+
+```{r}
+# makes the plots look nice
+par(mfrow=c(2,2), mgp=c(1.7,.7,0), lwd=1.5, lend=2,
+    cex.lab=1, cex.axis=1, cex.main=1,
+    mar=c(2.8,2.8,1.8,.2), bty='l', oma=c(0,0,2,0))
+# Plot diagnostics
+plot(model_interaction)
+```
+
+# Evaluating and relaxing assumptions
+
+## Normality
+
+* For t-tests and F-tests, we assume the errors are normally distributed
+* If they are not, you learned about a theorem that makes them valid (from Gustavo). What was the theorem?
+
+* The residuals are the data version of the error and you can visualize them to see if they are normally distributed, especially important for hypothesis testing.
+
+### Visualization
+
+* Histogram of residuals
+
+```{r}
+hist(residuals(model_interaction), breaks = 20, main = "Histogram of Residuals", xlab = "Residuals")
+```
+
+* Normal QQ plot of the residuals
+
+```{r}
+qqnorm(scale(residuals(model_interaction)))
+qqline(scale(residuals(model_interaction)), col = "red")
+```
+
+## Homoskedasticity
+
+Assess constant variance of residuals using a plot.
+
+```{r}
+plot(model_interaction$fitted.values, residuals(model_interaction), main = "Residuals vs Fitted", xlab = "Fitted values", ylab = "Residuals")
+```
+
+### Transformations
+
+* Log transformation
+
+```{r}
+# Log-transform the response and re-fit the model
+model_log <- lm(log(fev) ~ age + smoke + sex, data = fev)
+summary(model_log)
+```
+
+**New interpretation of parameters**:
+Log-transforming the response variable changes the interpretation of the parameters.
+
+
+When you fit a regression model with a log-transformed dependent variable, such as $\log(\text{FEV})$, but you want to interpret the effects on the untransformed scale, you need to understand the multiplicative nature of the changes.
+
+#### Regression Model
+Consider a model:
+$$
+\log(\text{FEV}) = \beta_0 + \beta_1 \cdot \text{age} + \beta_2 \cdot \text{smoke} + \beta_3 \cdot \text{sex} + \epsilon
+$$
+
+Where:
+- $\text{smoke}$: Binary variable (e.g., 0 for non-current smokers, 1 for current smokers).
+- $\text{sex}$: Binary variable (e.g., 0 for females, 1 for males).
+
+#### Interpreting Coefficients on the Untransformed Scale
+
+1. **Intercept ($\beta_0$)**:
+   - The exponentiated intercept, $e^{\beta_0}$, represents the expected FEV for the reference group (e.g., non-current smokers and females) when age is zero. However, an age of zero may not be meaningful, so the intercept alone is less interpretable.
+
+2. **Age Coefficient ($\beta_1$)**:
+   - $e^{\beta_1}$ represents the multiplicative change in the expected FEV for each additional year of age, holding other factors constant. Specifically, it means a $100 \times (e^{\beta_1} - 1)\%$ change in FEV per unit increase in age.
+
+3. **Smoking Status Coefficient ($\beta_2$)**:
+   - $e^{\beta_2}$ represents the expected multiplicative change in FEV when comparing current smokers to non-current smokers, holding other factors constant. It translates to a $100 \times (e^{\beta_2} - 1)\%$ difference in expected FEV between these groups.
+
+4. **Sex Coefficient ($\beta_3$)**:
+   - $e^{\beta_3}$ represents the expected multiplicative change in FEV when comparing males to females, holding age and smoking status constant. This is interpreted as a $100 \times (e^{\beta_3} - 1)\%$ change in expected FEV.
+
+
+
+### Robust (sandwich) standard errors
+
+We don't have to apply a transformation to get valid results when there is heteroskedasticity.
+
+```{r}
+library(sandwich)
+
+# Compute robust standard errors
+tab_model(model_interaction, vcov.fun = vcovHC(model_interaction))
+```
+
+## Linearity
+
+## Polynomials
+
+```{r}
+# Polynomial term for age
+model_poly <- lm(fev ~ poly(age, 2) + smoke + sex, data = fev)
+summary(model_poly)
+```
+
+## Splines
+
+```{r}
+library(splines)
+
+# Fit a model using natural splines
+model_spline <- lm(fev ~ ns(age, df = 3) + smoke + sex, data = fev)
+summary(model_spline)
+```
