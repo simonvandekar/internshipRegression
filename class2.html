@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Vanderbilt Biostatistics Summer Internship: Regression - Class 2</title>
+<title>Class 2</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -57,149 +57,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
-  "location": "navbar",
-  "copy-button": false,
-  "collapse-after": 3,
-  "panel-placement": "end",
-  "type": "overlay",
-  "limit": 20,
-  "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
-  }
-}</script>
+<script src="class2_files/libs/clipboard/clipboard.min.js"></script>
+<script src="class2_files/libs/quarto-html/quarto.js"></script>
+<script src="class2_files/libs/quarto-html/popper.min.js"></script>
+<script src="class2_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="class2_files/libs/quarto-html/anchor.min.js"></script>
+<link href="class2_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="class2_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="class2_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="class2_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="class2_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="fullcontent">
 
-<div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
-    <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Vanderbilt Biostatistics Summer Internship: Regression</span>
-    </a>
-  </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-  <span class="navbar-toggler-icon"></span>
-</button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="./index.html" rel="" target="">
- <span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-course-content" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
- <span class="menu-text">Course content</span>
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-course-content">    
-        <li>
-    <a class="dropdown-item" href="./class1.html" rel="" target="">
- <span class="dropdown-text">Class 1</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./class2.html" rel="" target="">
- <span class="dropdown-text">Class 2</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./class3.html" rel="" target="">
- <span class="dropdown-text">Class 3</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./class4.html" rel="" target="">
- <span class="dropdown-text">Class 4</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./class5.html" rel="" target="">
- <span class="dropdown-text">Class 5</span></a>
-  </li>  
-    </ul>
-  </li>
-</ul>
-            <div class="quarto-navbar-tools ms-auto">
-</div>
-          </div> <!-- /navcollapse -->
-      </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
-<!-- sidebar -->
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#objectives" id="toc-objectives" class="nav-link active" data-scroll-target="#objectives">Objectives</a></li>
-  <li><a href="#goals" id="toc-goals" class="nav-link" data-scroll-target="#goals">Goals</a></li>
-  <li><a href="#multiple-regression" id="toc-multiple-regression" class="nav-link" data-scroll-target="#multiple-regression">Multiple regression</a>
-  <ul class="collapse">
-  <li><a href="#multiple-covariates" id="toc-multiple-covariates" class="nav-link" data-scroll-target="#multiple-covariates">Multiple covariates</a></li>
-  <li><a href="#example-age-and-smoking" id="toc-example-age-and-smoking" class="nav-link" data-scroll-target="#example-age-and-smoking">Example: Age and smoking</a></li>
-  <li><a href="#example-age-smoking-sex" id="toc-example-age-smoking-sex" class="nav-link" data-scroll-target="#example-age-smoking-sex">Example: Age, smoking, sex</a></li>
-  <li><a href="#regression-model-with-interaction" id="toc-regression-model-with-interaction" class="nav-link" data-scroll-target="#regression-model-with-interaction">Regression Model with Interaction</a></li>
-  <li><a href="#interpretation-of-coefficients" id="toc-interpretation-of-coefficients" class="nav-link" data-scroll-target="#interpretation-of-coefficients">Interpretation of Coefficients</a></li>
-  <li><a href="#example-age-by-sex-interaction" id="toc-example-age-by-sex-interaction" class="nav-link" data-scroll-target="#example-age-by-sex-interaction">Example: Age by sex interaction</a></li>
-  </ul></li>
-  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions">Assumptions</a></li>
-  <li><a href="#evaluating-model-fit" id="toc-evaluating-model-fit" class="nav-link" data-scroll-target="#evaluating-model-fit">Evaluating model fit</a>
-  <ul class="collapse">
-  <li><a href="#r-square" id="toc-r-square" class="nav-link" data-scroll-target="#r-square">R-square</a></li>
-  <li><a href="#diagnostic-plots-for-lm" id="toc-diagnostic-plots-for-lm" class="nav-link" data-scroll-target="#diagnostic-plots-for-lm">Diagnostic plots for <code>lm</code></a></li>
-  </ul></li>
-  <li><a href="#evaluating-and-relaxing-assumptions" id="toc-evaluating-and-relaxing-assumptions" class="nav-link" data-scroll-target="#evaluating-and-relaxing-assumptions">Evaluating and relaxing assumptions</a>
-  <ul class="collapse">
-  <li><a href="#normality" id="toc-normality" class="nav-link" data-scroll-target="#normality">Normality</a>
-  <ul class="collapse">
-  <li><a href="#visualization" id="toc-visualization" class="nav-link" data-scroll-target="#visualization">Visualization</a></li>
-  </ul></li>
-  <li><a href="#homoskedasticity" id="toc-homoskedasticity" class="nav-link" data-scroll-target="#homoskedasticity">Homoskedasticity</a>
-  <ul class="collapse">
-  <li><a href="#transformations" id="toc-transformations" class="nav-link" data-scroll-target="#transformations">Transformations</a></li>
-  <li><a href="#robust-sandwich-standard-errors" id="toc-robust-sandwich-standard-errors" class="nav-link" data-scroll-target="#robust-sandwich-standard-errors">Robust (sandwich) standard errors</a></li>
-  </ul></li>
-  <li><a href="#linearity" id="toc-linearity" class="nav-link" data-scroll-target="#linearity">Linearity</a></li>
-  <li><a href="#polynomials" id="toc-polynomials" class="nav-link" data-scroll-target="#polynomials">Polynomials</a></li>
-  <li><a href="#splines" id="toc-splines" class="nav-link" data-scroll-target="#splines">Splines</a></li>
-  </ul></li>
-  </ul>
-</nav>
-    </div>
-<!-- main -->
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -255,8 +132,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Specifying the model</li>
 </ul>
 <div class="cell">
-<details>
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the necessary libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
@@ -271,7 +146,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Specify and fit the model</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(fev <span class="sc">~</span> age <span class="sc">+</span> smoke, <span class="at">data =</span> fev)</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -293,10 +167,7 @@ Residual standard error: 0.5651 on 651 degrees of freedom
 Multiple R-squared:  0.5766,    Adjusted R-squared:  0.5753 
 F-statistic: 443.3 on 2 and 651 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
-<details>
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output-display">
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
 <tbody>
@@ -347,13 +218,10 @@ F-statistic: 443.3 on 2 and 651 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li>Interpretation of tests</li>
 </ul>
 <div class="cell">
-<details>
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># t-tests are part of the summary output, indicating significance of individual coefficients</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># F-tests assess the overall significance, frequently output in the summary table</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">anova</span>(model), <span class="at">format=</span><span class="st">'html'</span>, <span class="at">caption=</span><span class="st">'ANOVA table'</span>, <span class="at">digits=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output-display">
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
 <caption>ANOVA table</caption>
@@ -402,8 +270,6 @@ F-statistic: 443.3 on 2 and 651 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li>Using <code>emmeans</code> or <code>effects</code> to plot age effects</li>
 </ul>
 <div class="cell">
-<details>
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimated regression line</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>ageGrid <span class="ot">=</span> <span class="fu">ref_grid</span>(model, <span class="at">at=</span><span class="fu">list</span>(<span class="at">age=</span><span class="fu">seq</span>(<span class="fu">min</span>(fev<span class="sc">$</span>age), <span class="fu">max</span>(fev<span class="sc">$</span>age), <span class="at">length.out=</span><span class="dv">100</span>)) )</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(ageGrid, <span class="sc">~</span>age)</span>
@@ -417,7 +283,6 @@ F-statistic: 443.3 on 2 and 651 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data =</span> pred_plot_data, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">ymin =</span> lower.CL, <span class="at">ymax =</span> upper.CL), <span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">fill =</span> <span class="st">"grey"</span>) <span class="sc">+</span></span>
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> pred_plot_data, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> emmean), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"FEV vs. Age with Regression Line"</span>, <span class="at">x =</span> <span class="st">"Age"</span>, <span class="at">y =</span> <span class="st">"FEV"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output-display">
 <p><img src="class2_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -426,8 +291,6 @@ F-statistic: 443.3 on 2 and 651 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li>Using <code>emmeans</code> or <code>effects</code> to plot smoking effects</li>
 </ul>
 <div class="cell">
-<details>
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimated means</span></span>
@@ -444,7 +307,6 @@ F-statistic: 443.3 on 2 and 651 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># example with jitter, comment out the other line</span></span>
 <span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="co">#geom_jitter(data = fev, aes(x = smoke, y = fev), alpha = 0.5) +</span></span>
 <span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Estimated Means with FEV"</span>, <span class="at">x =</span> <span class="st">"Smoking status"</span>, <span class="at">y =</span> <span class="st">"Estimated Mean FEV"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output-display">
 <p><img src="class2_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -505,12 +367,9 @@ F-statistic: 443.3 on 2 and 651 DF,  p-value: &lt; 2.2e-16</code></pre>
 <h2 class="anchored" data-anchor-id="example-age-by-sex-interaction">Example: Age by sex interaction</h2>
 <p>Now we investigate the interaction between age and smoking.</p>
 <div class="cell">
-<details>
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model with interaction</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>model_interaction <span class="ot">&lt;-</span> <span class="fu">lm</span>(fev <span class="sc">~</span> age <span class="sc">*</span> sex, <span class="at">data =</span> fev)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_interaction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -538,11 +397,8 @@ F-statistic: 389.4 on 3 and 650 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li>Interpretation of tests and type 2 sum of squares using <code>car::Anova</code></li>
 </ul>
 <div class="cell">
-<details>
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(model_interaction, <span class="at">type =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Anova Table (Type II tests)
 
@@ -578,15 +434,12 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="diagnostic-plots-for-lm" class="level2">
 <h2 class="anchored" data-anchor-id="diagnostic-plots-for-lm">Diagnostic plots for <code>lm</code></h2>
 <div class="cell">
-<details>
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># makes the plots look nice</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>), <span class="at">mgp=</span><span class="fu">c</span>(<span class="fl">1.7</span>,.<span class="dv">7</span>,<span class="dv">0</span>), <span class="at">lwd=</span><span class="fl">1.5</span>, <span class="at">lend=</span><span class="dv">2</span>,</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cex.lab=</span><span class="dv">1</span>, <span class="at">cex.axis=</span><span class="dv">1</span>, <span class="at">cex.main=</span><span class="dv">1</span>,</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mar=</span><span class="fu">c</span>(<span class="fl">2.8</span>,<span class="fl">2.8</span>,<span class="fl">1.8</span>,.<span class="dv">2</span>), <span class="at">bty=</span><span class="st">'l'</span>, <span class="at">oma=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">0</span>))</span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot diagnostics</span></span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model_interaction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output-display">
 <p><img src="class2_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -608,10 +461,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li>Histogram of residuals</li>
 </ul>
 <div class="cell">
-<details>
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">residuals</span>(model_interaction), <span class="at">breaks =</span> <span class="dv">20</span>, <span class="at">main =</span> <span class="st">"Histogram of Residuals"</span>, <span class="at">xlab =</span> <span class="st">"Residuals"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output-display">
 <p><img src="class2_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -620,11 +470,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li>Normal QQ plot of the residuals</li>
 </ul>
 <div class="cell">
-<details>
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">scale</span>(<span class="fu">residuals</span>(model_interaction)))</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">scale</span>(<span class="fu">residuals</span>(model_interaction)), <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output-display">
 <p><img src="class2_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -635,10 +482,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <h2 class="anchored" data-anchor-id="homoskedasticity">Homoskedasticity</h2>
 <p>Assess constant variance of residuals using a plot.</p>
 <div class="cell">
-<details>
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model_interaction<span class="sc">$</span>fitted.values, <span class="fu">residuals</span>(model_interaction), <span class="at">main =</span> <span class="st">"Residuals vs Fitted"</span>, <span class="at">xlab =</span> <span class="st">"Fitted values"</span>, <span class="at">ylab =</span> <span class="st">"Residuals"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output-display">
 <p><img src="class2_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -649,12 +493,9 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li>Log transformation</li>
 </ul>
 <div class="cell">
-<details>
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Log-transform the response and re-fit the model</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>model_log <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(fev) <span class="sc">~</span> age <span class="sc">+</span> smoke <span class="sc">+</span> sex, <span class="at">data =</span> fev)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_log)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -713,13 +554,10 @@ F-statistic: 355.1 on 3 and 650 DF,  p-value: &lt; 2.2e-16</code></pre>
 <h3 class="anchored" data-anchor-id="robust-sandwich-standard-errors">Robust (sandwich) standard errors</h3>
 <p>We don’t have to apply a transformation to get valid results when there is heteroskedasticity.</p>
 <div class="cell">
-<details>
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sandwich)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute robust standard errors</span></span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(model_interaction, <span class="at">vcov.fun =</span> <span class="fu">vcovHC</span>(model_interaction))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output-display">
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
 <tbody>
@@ -779,12 +617,9 @@ F-statistic: 355.1 on 3 and 650 DF,  p-value: &lt; 2.2e-16</code></pre>
 <section id="polynomials" class="level2">
 <h2 class="anchored" data-anchor-id="polynomials">Polynomials</h2>
 <div class="cell">
-<details>
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Polynomial term for age</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>model_poly <span class="ot">&lt;-</span> <span class="fu">lm</span>(fev <span class="sc">~</span> <span class="fu">poly</span>(age, <span class="dv">2</span>) <span class="sc">+</span> smoke <span class="sc">+</span> sex, <span class="at">data =</span> fev)</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_poly)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -813,14 +648,11 @@ F-statistic: 264.6 on 4 and 649 DF,  p-value: &lt; 2.2e-16</code></pre>
 <section id="splines" class="level2">
 <h2 class="anchored" data-anchor-id="splines">Splines</h2>
 <div class="cell">
-<details>
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(splines)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a model using natural splines</span></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>model_spline <span class="ot">&lt;-</span> <span class="fu">lm</span>(fev <span class="sc">~</span> <span class="fu">ns</span>(age, <span class="at">df =</span> <span class="dv">3</span>) <span class="sc">+</span> smoke <span class="sc">+</span> sex, <span class="at">data =</span> fev)</span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_spline)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -846,12 +678,11 @@ Multiple R-squared:  0.6323,    Adjusted R-squared:  0.6295
 F-statistic: 222.9 on 5 and 648 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
-
-
 </section>
 </section>
 
-</main> <!-- /main -->
+</main>
+<!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

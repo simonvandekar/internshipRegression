@@ -2,6 +2,13 @@
 title: "Class 1"
 ---
 
+```{r setup, include=FALSE}
+# Global knitr options
+knitr::opts_chunk$set(
+  warning = FALSE, # Suppresses warnings
+  message = FALSE  # Suppresses messages
+)
+```
 
 ## Objectives
 
@@ -60,6 +67,12 @@ fev$smoke = relevel(as.factor(fev$smoke), ref='non-current smoker')
 **Exercise:** Create a plot showing a histogram of the FEV variable.
 
 
+```{r}
+hist(fev$fev)
+```
+
+
+
 #### Boxplot visualization
 
 This is a visualization of the association between FEV and smoking status before fitting a linear regression.
@@ -78,6 +91,12 @@ ggplot(fev, aes(x = smoke, y = fev)) +
 
 
 **Exercise:** Perform a t-test of smoking status. Set the option `var.equal = TRUE`. Interpret the results of all the output.
+
+
+```{r}
+t.test(fev ~ smoke, data = fev, var.equal = TRUE)
+```
+
 
 #### Fitting the linear regression model
 
@@ -125,9 +144,9 @@ plot_data <- as.data.frame(means)
 ggplot(plot_data, aes(x = smoke, y = emmean)) +
   geom_point(size = 4) +
   geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL), width = 0.2) +
-  geom_point(data = fev, aes(x = smoke, y = fev), alpha = 0.5, position = position_dodge(width = 0.4)) +
+  #geom_point(data = fev, aes(x = smoke, y = fev), alpha = 0.5, position = position_dodge(width = 0.4)) +
   # example with jitter, comment out the other line
-  #geom_jitter(data = fev, aes(x = smoke, y = fev), alpha = 0.5) +
+  geom_jitter(data = fev, aes(x = smoke, y = fev), alpha = 0.5) +
   labs(title = "Estimated Means with FEV", x = "Smoking status", y = "Estimated Mean FEV")
 ```
 

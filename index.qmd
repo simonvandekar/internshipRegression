@@ -11,12 +11,15 @@ This is a series of five 90 minute lectures taught by [Simon](http://simonvandek
 Objectives:
 
 1.  Introductions
-2.  Understand the concepts of linear regression
-3.  Know how to interpret regression coefficients
+2.  Understand the concepts of simple linear regression
+3.  Know how to interpret simple regression coefficients
 
 ## Day 7
 
 Objectives:
+
+1.  Understand the concepts of multiple regression
+2.  Know how to interpret multiple coefficients
 
 ## Day 8
 
