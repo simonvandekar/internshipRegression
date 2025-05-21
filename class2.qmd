@@ -37,6 +37,7 @@ $$
 $$
 
 Where:
+
 - $\beta_0$ is the intercept.
 - $\beta_1$ is the change in FEV for a one-unit change in age, holding smoke constant.
 - $\beta_2$ is the difference in FEV between smokers and non-smokers, holding age constant.
