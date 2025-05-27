@@ -216,12 +216,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">'RESI'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+<p>This code below loads the <code>insurance</code> dataset and assigns it to the variable <code>ins</code>.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RESI)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ins <span class="ot">=</span> insurance</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ins <span class="ot">=</span> insurance</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  age    sex    bmi children smoker    region   charges
+1  19 female 27.900        0      1 southwest 16884.924
+2  18   male 33.770        1      0 southeast  1725.552
+3  28   male 33.000        3      0 southeast  4449.462
+4  33   male 22.705        0      0 northwest 21984.471
+5  32   male 28.880        0      0 northwest  3866.855
+6  31 female 25.740        0      0 southeast  3756.622</code></pre>
+</div>
 </div>
 <p>We’ll follow the outline of a paper:</p>
 <ol type="1">
@@ -237,18 +248,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul></li>
 <li><strong>Results</strong>
 <ul>
-<li>Follow the structure we outlined in the Methods and perform the analyses.</li>
+<li>Follow the structure we outlined in the Methods and perform the analyses. For a report like this, you can include everything. For a paper, you will work with the team to decide what information is most important to include in the document.</li>
 </ul></li>
-<li><strong>Discussion</strong></li>
+<li><strong>Discussion</strong>
+<ul>
+<li>We won’t worry about this for now</li>
+</ul></li>
 </ol>
 </section>
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>Let’s use the insurance dataset to investigate the following questions:</p>
+<p>Let’s use the insurance dataset to investigate the following questions.</p>
 <ol type="1">
 <li><strong>Age Influence on Health Charges:</strong>
 <ul>
-<li>How does age affect medical charges, and is the relationship linear, or do older age groups experience disproportionately higher charges? <!-- 2. **Impact of Sex on Medical Charges:** --> <!--    - Does sex play a role in influencing the amount individuals are charged for medical expenses, and are there notable differences in charges between males and females? --></li>
+<li>How does age affect medical charges, and is the relationship linear, or do older age groups experience disproportionately higher charges?</li>
 </ul></li>
 <li><strong>Influence of Smoking on Medical Expenses:</strong>
 <ul>
@@ -268,12 +282,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="methods" class="level1">
 <h1>Methods</h1>
 <p><strong>Describe the overall strategy:</strong></p>
-<p>For all study aims, we will use <code>XX</code> model including <code>XX</code> as covariates. We will use <code>XX</code> plots to understand the distributions of the covariates with the outcome. We will evaluate the effect of each variable using XX tests and include added variable plots to visualize the unique contribution of each variable. <strong>Other ideas?</strong></p>
+<p>For all study aims, we will use a <code>XX</code> model including <code>XX</code> as covariates. We will use <code>XX</code> plots to understand the distributions of the covariates with the outcome. We will evaluate the effect of each variable using XX tests and include added variable plots to visualize the unique contribution of each variable. <strong>Other ideas?</strong></p>
 <p>Then describe the specific strategy for each research question. Create the results below.</p>
 <ol type="1">
 <li><strong>Age Influence on Health Charges:</strong>
 <ul>
 <li>To evaluate the effect of age on medical charges, we will test the linear age effect using a <code>XX</code> test and report the effect with the estimate, confidence interval, T-statistic, degrees of freedom, and <span class="math inline">\(p\)</span>-value.</li>
+<li>To evaluate the linearity of the relationship, we will do <code>XX</code>.</li>
+<li>Testing <code>XX</code> will evaluate if older ages experience higher charges.</li>
 </ul></li>
 <li><strong>Influence of Smoking on Medical Expenses:</strong>
 <ul>

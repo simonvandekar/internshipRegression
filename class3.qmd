@@ -23,9 +23,12 @@ The goal will be to analyze some insurance claims data. Install the `RESI` `R` p
 install.packages('RESI')
 ```
 
+This code below loads the `insurance` dataset and assigns it to the variable `ins`.
+
 ```{r}
 library(RESI)
 ins = insurance
+head(ins)
 ```
 
 We'll follow the outline of a paper:
@@ -39,17 +42,16 @@ We'll follow the outline of a paper:
     - What visualizations will you use to evaluate the model assumptions?
     - How will you visualize the results with the data.
 3. **Results**
-    - Follow the structure we outlined in the Methods and perform the analyses.
+    - Follow the structure we outlined in the Methods and perform the analyses. For a report like this, you can include everything. For a paper, you will work with the team to decide what information is most important to include in the document.
 4. **Discussion**
+    - We won't worry about this for now
 
 # Introduction
 
-Let's use the insurance dataset to investigate the following questions:
+Let's use the insurance dataset to investigate the following questions.
 
 1. **Age Influence on Health Charges:**
    - How does age affect medical charges, and is the relationship linear, or do older age groups experience disproportionately higher charges?
-<!-- 2. **Impact of Sex on Medical Charges:** -->
-<!--    - Does sex play a role in influencing the amount individuals are charged for medical expenses, and are there notable differences in charges between males and females? -->
 2. **Influence of Smoking on Medical Expenses:**
    - How does smoking status influence medical charges, and are smokers subjected to significantly higher health-related expenses compared to non-smokers?
 3. **Regional Variations in Healthcare Charges:**
@@ -63,7 +65,7 @@ Let's use the insurance dataset to investigate the following questions:
 
 **Describe the overall strategy:**
 
-For all study aims, we will use `XX` model including `XX` as covariates.
+For all study aims, we will use a `XX` model including `XX` as covariates.
 We will use `XX` plots to understand the distributions of the covariates with the outcome.
 We will evaluate the effect of each variable using XX tests and include added variable plots to visualize the unique contribution of each variable.
 **Other ideas?**
@@ -73,6 +75,8 @@ Then describe the specific strategy for each research question. Create the resul
 
 1. **Age Influence on Health Charges:**
    - To evaluate the effect of age on medical charges, we will test the linear age effect using a `XX` test and report the effect with the estimate, confidence interval, T-statistic, degrees of freedom, and $p$-value.
+   - To evaluate the linearity of the relationship, we will do `XX`.
+   - Testing `XX` will evaluate if older ages experience higher charges.
 2. **Influence of Smoking on Medical Expenses:**
    - *fill in your answer here*
 3. **Regional Variations in Healthcare Charges:**
