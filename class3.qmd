@@ -1,5 +1,11 @@
 ---
 title: "Class 3"
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    code-fold: true
 ---
 
 
@@ -65,24 +71,35 @@ Let's use the insurance dataset to investigate the following questions.
 
 **Describe the overall strategy:**
 
-For all study aims, we will use a `XX` model including `XX` as covariates.
-We will use `XX` plots to understand the distributions of the covariates with the outcome.
-We will evaluate the effect of each variable using XX tests and include added variable plots to visualize the unique contribution of each variable.
-**Other ideas?**
+For all study aims, we will use a linear regression model for charges, including age, sex, region, bmi, smoking status as covariates.
+We will use histograms, boxplots, scatter plots, and Table 1 to understand the distributions of the covariates with the outcome.
+We will evaluate the effect of each variable using T-tests, F-test, and include added variable plots to visualize the unique contribution of each variable.
+
+**Variables to include in Table 1:**
+
+* Charges
+* Age
+* Sex
+* BMI
+* Region
+* Smoking status
 
 
 Then describe the specific strategy for each research question. Create the results below.
 
 1. **Age Influence on Health Charges:**
-   - To evaluate the effect of age on medical charges, we will test the linear age effect using a `XX` test and report the effect with the estimate, confidence interval, T-statistic, degrees of freedom, and $p$-value.
-   - To evaluate the linearity of the relationship, we will do `XX`.
-   - Testing `XX` will evaluate if older ages experience higher charges.
+   - To evaluate the effect of age on medical charges, we will test the linear age effect using a T-test and report the effect with the estimate, confidence interval, T-statistic, degrees of freedom, and $p$-value.
+   - To evaluate the linearity of the relationship, we will create a scatter plot of charges versus age with a best fit line from the model.
+   - Testing the slope for age and if the sign of the slope is positive will evaluate if older ages experience higher charges.
 2. **Influence of Smoking on Medical Expenses:**
-   - *fill in your answer here*
+   - To evaluate the effect of smoking status on medical charges, we will test smoking effect using a T-test and report the effect with the estimate, confidence interval, T-statistic, degrees of freedom, and $p$-value.
+   - Testing the coefficient for smoking and if the sign of the slope is positive will evaluate if older ages experience higher charges.
 3. **Regional Variations in Healthcare Charges:**
-   - *fill in your answer here*
+   - We will perform an F-test to assess regional differences. To understand how regions differ, we could create a plot (`emmeans`) and we can do *post hoc* tests.
 4. **Combined Effects of Predictors:**
-   - *fill in your answer here*
+   - Added variable plots.
+   - $R^2$
+   - Add a smoking by age interaction. We can use a T or F-test to test the interaction.
 
 
 # Results

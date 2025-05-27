@@ -282,26 +282,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="methods" class="level1">
 <h1>Methods</h1>
 <p><strong>Describe the overall strategy:</strong></p>
-<p>For all study aims, we will use a <code>XX</code> model including <code>XX</code> as covariates. We will use <code>XX</code> plots to understand the distributions of the covariates with the outcome. We will evaluate the effect of each variable using XX tests and include added variable plots to visualize the unique contribution of each variable. <strong>Other ideas?</strong></p>
+<p>For all study aims, we will use a linear regression model for charges, including age, sex, region, bmi, smoking status as covariates. We will use histograms, boxplots, scatter plots, and Table 1 to understand the distributions of the covariates with the outcome. We will evaluate the effect of each variable using T-tests, F-test, and include added variable plots to visualize the unique contribution of each variable.</p>
+<p><strong>Variables to include in Table 1:</strong></p>
+<ul>
+<li>Charges</li>
+<li>Age</li>
+<li>Sex</li>
+<li>BMI</li>
+<li>Region</li>
+<li>Smoking status</li>
+</ul>
 <p>Then describe the specific strategy for each research question. Create the results below.</p>
 <ol type="1">
 <li><strong>Age Influence on Health Charges:</strong>
 <ul>
-<li>To evaluate the effect of age on medical charges, we will test the linear age effect using a <code>XX</code> test and report the effect with the estimate, confidence interval, T-statistic, degrees of freedom, and <span class="math inline">\(p\)</span>-value.</li>
-<li>To evaluate the linearity of the relationship, we will do <code>XX</code>.</li>
-<li>Testing <code>XX</code> will evaluate if older ages experience higher charges.</li>
+<li>To evaluate the effect of age on medical charges, we will test the linear age effect using a T-test and report the effect with the estimate, confidence interval, T-statistic, degrees of freedom, and <span class="math inline">\(p\)</span>-value.</li>
+<li>To evaluate the linearity of the relationship, we will create a scatter plot of charges versus age with a best fit line from the model.</li>
+<li>Testing the slope for age and if the sign of the slope is positive will evaluate if older ages experience higher charges.</li>
 </ul></li>
 <li><strong>Influence of Smoking on Medical Expenses:</strong>
 <ul>
-<li><em>fill in your answer here</em></li>
+<li>To evaluate the effect of smoking status on medical charges, we will test smoking effect using a T-test and report the effect with the estimate, confidence interval, T-statistic, degrees of freedom, and <span class="math inline">\(p\)</span>-value.</li>
+<li>Testing the coefficient for smoking and if the sign of the slope is positive will evaluate if older ages experience higher charges.</li>
 </ul></li>
 <li><strong>Regional Variations in Healthcare Charges:</strong>
 <ul>
-<li><em>fill in your answer here</em></li>
+<li>We will perform an F-test to assess regional differences. To understand how regions differ, we could create a plot (<code>emmeans</code>) and we can do <em>post hoc</em> tests.</li>
 </ul></li>
 <li><strong>Combined Effects of Predictors:</strong>
 <ul>
-<li><em>fill in your answer here</em></li>
+<li>Added variable plots.</li>
+<li><span class="math inline">\(R^2\)</span></li>
+<li>Add a smoking by age interaction. We can use a T or F-test to test the interaction.</li>
 </ul></li>
 </ol>
 </section>
