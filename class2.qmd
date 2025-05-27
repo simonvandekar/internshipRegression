@@ -88,7 +88,7 @@ pred_plot_data <- as.data.frame(predictions)
 
 # Scatter plot with regression line
 ggplot() +
-  geom_point(data = fev, aes(x = age, y = fev), alpha = 0.5) +
+  geom_point(data = fev, aes(x = age, y = fev, color = smoke), alpha = 0.5) +
   geom_ribbon(data = pred_plot_data, aes(x = age, ymin = lower.CL, ymax = upper.CL), alpha = 0.7, fill = "grey") +
   geom_line(data = pred_plot_data, aes(x = age, y = emmean), color = "red", linewidth = 1) +
   labs(title = "FEV vs. Age with Regression Line", x = "Age", y = "FEV")
@@ -123,6 +123,14 @@ ggplot(plot_data, aes(x = smoke, y = emmean)) +
 * Interpretation of parameter estimates
 
 **Exercise:** Add sex to the model, create the output using `summary` and `tab_model`, and interpret the coefficients for all variables.
+
+
+```{r}
+model1<-lm(fev~age+smoke+sex,data=fev)
+summary(model1)
+tab_model(model1)
+```
+
 
 
 * Interpretation of tests

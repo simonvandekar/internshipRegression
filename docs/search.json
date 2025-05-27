@@ -109,14 +109,14 @@
     "href": "class2.html#example-age-and-smoking",
     "title": "Class 2",
     "section": "Example: Age and smoking",
-    "text": "Example: Age and smoking\n\nSpecifying the model\n\n\n\nCode\n# Load the necessary libraries\nlibrary(ggplot2)\nlibrary(emmeans)\nlibrary(sjPlot)\n\n# Load the dataset\nfev &lt;- read.csv('Datasets/FEV.csv')\n\n# Convert smoking status to a factor\nfev$smoke &lt;- factor(fev$smoke, levels = c('non-current smoker', 'current smoker'))\n\n# Specify and fit the model\nmodel &lt;- lm(fev ~ age + smoke, data = fev)\nsummary(model)\n\n\n\nCall:\nlm(formula = fev ~ age + smoke, data = fev)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-1.6653 -0.3564 -0.0508  0.3494  2.0894 \n\nCoefficients:\n                     Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)          0.367373   0.081436   4.511 7.65e-06 ***\nage                  0.230605   0.008184  28.176  &lt; 2e-16 ***\nsmokecurrent smoker -0.208995   0.080745  -2.588  0.00986 ** \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.5651 on 651 degrees of freedom\nMultiple R-squared:  0.5766,    Adjusted R-squared:  0.5753 \nF-statistic: 443.3 on 2 and 651 DF,  p-value: &lt; 2.2e-16\n\n\nCode\ntab_model(model)\n\n\n\n\n\n \nfev\n\n\nPredictors\nEstimates\nCI\np\n\n\n(Intercept)\n0.37\n0.21 – 0.53\n&lt;0.001\n\n\nage\n0.23\n0.21 – 0.25\n&lt;0.001\n\n\nsmoke [current smoker]\n-0.21\n-0.37 – -0.05\n0.010\n\n\nObservations\n654\n\n\nR2 / R2 adjusted\n0.577 / 0.575\n\n\n\n\n\n\n\nExercise: Interpret the coefficients as described above. Use the coefficients table output to discuss individual predictors.\n\nInterpretation of tests\n\n\n\nCode\nlibrary(kableExtra)\n# t-tests are part of the summary output, indicating significance of individual coefficients\n# F-tests assess the overall significance, frequently output in the summary table\nkable(anova(model), format='html', caption='ANOVA table', digits=2)\n\n\n\nANOVA table\n\n\n\nDf\nSum Sq\nMean Sq\nF value\nPr(&gt;F)\n\n\n\n\nage\n1\n280.92\n280.92\n879.81\n0.00\n\n\nsmoke\n1\n2.14\n2.14\n6.70\n0.01\n\n\nResiduals\n651\n207.86\n0.32\nNA\nNA\n\n\n\n\n\n\n\n\nUsing emmeans or effects to plot age effects\n\n\n\nCode\n# Estimated regression line\nageGrid = ref_grid(model, at=list(age=seq(min(fev$age), max(fev$age), length.out=100)) )\npredictions &lt;- emmeans(ageGrid, ~age)\n\n# Prepare data for plotting\npred_plot_data &lt;- as.data.frame(predictions)\n\n# Scatter plot with regression line\nggplot() +\n  geom_point(data = fev, aes(x = age, y = fev), alpha = 0.5) +\n  geom_ribbon(data = pred_plot_data, aes(x = age, ymin = lower.CL, ymax = upper.CL), alpha = 0.7, fill = \"grey\") +\n  geom_line(data = pred_plot_data, aes(x = age, y = emmean), color = \"red\", linewidth = 1) +\n  labs(title = \"FEV vs. Age with Regression Line\", x = \"Age\", y = \"FEV\")\n\n\n\n\n\n\nUsing emmeans or effects to plot smoking effects\n\n\n\nCode\nlibrary(emmeans)\n\n# Estimated means\nmeans &lt;- emmeans(model, ~ smoke)\n\n# Scatter plot of estimated means\nlibrary(ggplot2)\n\nplot_data &lt;- as.data.frame(means)\nggplot(plot_data, aes(x = smoke, y = emmean)) +\n  geom_point(size = 4) +\n  geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL), width = 0.2) +\n  #geom_point(data = fev, aes(x = smoke, y = fev), alpha = 0.5, position = position_dodge(width = 0.4)) +\n  # example with jitter, comment out the other line\n  #geom_jitter(data = fev, aes(x = smoke, y = fev), alpha = 0.5) +\n  labs(title = \"Estimated Means with FEV\", x = \"Smoking status\", y = \"Estimated Mean FEV\")\n\n\n\n\n\n\nAdded variable plots are useful for visualizing the effect of one variable removing the effect of all the other variables\nHere, it is interesting for visualizing the smoking effect"
+    "text": "Example: Age and smoking\n\nSpecifying the model\n\n\n\nCode\n# Load the necessary libraries\nlibrary(ggplot2)\nlibrary(emmeans)\nlibrary(sjPlot)\n\n# Load the dataset\nfev &lt;- read.csv('Datasets/FEV.csv')\n\n# Convert smoking status to a factor\nfev$smoke &lt;- factor(fev$smoke, levels = c('non-current smoker', 'current smoker'))\n\n# Specify and fit the model\nmodel &lt;- lm(fev ~ age + smoke, data = fev)\nsummary(model)\n\n\n\nCall:\nlm(formula = fev ~ age + smoke, data = fev)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-1.6653 -0.3564 -0.0508  0.3494  2.0894 \n\nCoefficients:\n                     Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)          0.367373   0.081436   4.511 7.65e-06 ***\nage                  0.230605   0.008184  28.176  &lt; 2e-16 ***\nsmokecurrent smoker -0.208995   0.080745  -2.588  0.00986 ** \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.5651 on 651 degrees of freedom\nMultiple R-squared:  0.5766,    Adjusted R-squared:  0.5753 \nF-statistic: 443.3 on 2 and 651 DF,  p-value: &lt; 2.2e-16\n\n\nCode\ntab_model(model)\n\n\n\n\n\n \nfev\n\n\nPredictors\nEstimates\nCI\np\n\n\n(Intercept)\n0.37\n0.21 – 0.53\n&lt;0.001\n\n\nage\n0.23\n0.21 – 0.25\n&lt;0.001\n\n\nsmoke [current smoker]\n-0.21\n-0.37 – -0.05\n0.010\n\n\nObservations\n654\n\n\nR2 / R2 adjusted\n0.577 / 0.575\n\n\n\n\n\n\n\nExercise: Interpret the coefficients as described above. Use the coefficients table output to discuss individual predictors.\n\nInterpretation of tests\n\n\n\nCode\nlibrary(kableExtra)\n# t-tests are part of the summary output, indicating significance of individual coefficients\n# F-tests assess the overall significance, frequently output in the summary table\nkable(anova(model), format='html', caption='ANOVA table', digits=2)\n\n\n\nANOVA table\n\n\n\nDf\nSum Sq\nMean Sq\nF value\nPr(&gt;F)\n\n\n\n\nage\n1\n280.92\n280.92\n879.81\n0.00\n\n\nsmoke\n1\n2.14\n2.14\n6.70\n0.01\n\n\nResiduals\n651\n207.86\n0.32\nNA\nNA\n\n\n\n\n\n\n\n\nUsing emmeans or effects to plot age effects\n\n\n\nCode\n# Estimated regression line\nageGrid = ref_grid(model, at=list(age=seq(min(fev$age), max(fev$age), length.out=100)) )\npredictions &lt;- emmeans(ageGrid, ~age)\n\n# Prepare data for plotting\npred_plot_data &lt;- as.data.frame(predictions)\n\n# Scatter plot with regression line\nggplot() +\n  geom_point(data = fev, aes(x = age, y = fev, color = smoke), alpha = 0.5) +\n  geom_ribbon(data = pred_plot_data, aes(x = age, ymin = lower.CL, ymax = upper.CL), alpha = 0.7, fill = \"grey\") +\n  geom_line(data = pred_plot_data, aes(x = age, y = emmean), color = \"red\", linewidth = 1) +\n  labs(title = \"FEV vs. Age with Regression Line\", x = \"Age\", y = \"FEV\")\n\n\n\n\n\n\nUsing emmeans or effects to plot smoking effects\n\n\n\nCode\nlibrary(emmeans)\n\n# Estimated means\nmeans &lt;- emmeans(model, ~ smoke)\n\n# Scatter plot of estimated means\nlibrary(ggplot2)\n\nplot_data &lt;- as.data.frame(means)\nggplot(plot_data, aes(x = smoke, y = emmean)) +\n  geom_point(size = 4) +\n  geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL), width = 0.2) +\n  #geom_point(data = fev, aes(x = smoke, y = fev), alpha = 0.5, position = position_dodge(width = 0.4)) +\n  # example with jitter, comment out the other line\n  #geom_jitter(data = fev, aes(x = smoke, y = fev), alpha = 0.5) +\n  labs(title = \"Estimated Means with FEV\", x = \"Smoking status\", y = \"Estimated Mean FEV\")\n\n\n\n\n\n\nAdded variable plots are useful for visualizing the effect of one variable removing the effect of all the other variables\nHere, it is interesting for visualizing the smoking effect"
   },
   {
     "objectID": "class2.html#example-age-smoking-sex",
     "href": "class2.html#example-age-smoking-sex",
     "title": "Class 2",
     "section": "Example: Age, smoking, sex",
-    "text": "Example: Age, smoking, sex\n\nInterpretation of parameter estimates\n\nExercise: Add sex to the model, create the output using summary and tab_model, and interpret the coefficients for all variables.\n\nInterpretation of tests\n\nExercise: Create the anova table and discuss the results."
+    "text": "Example: Age, smoking, sex\n\nInterpretation of parameter estimates\n\nExercise: Add sex to the model, create the output using summary and tab_model, and interpret the coefficients for all variables.\n\n\nCode\nmodel1&lt;-lm(fev~age+smoke+sex,data=fev)\nsummary(model1)\n\n\n\nCall:\nlm(formula = fev ~ age + smoke + sex, data = fev)\n\nResiduals:\n     Min       1Q   Median       3Q      Max \n-1.46707 -0.35426 -0.03811  0.32199  1.94943 \n\nCoefficients:\n                     Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)          0.237771   0.080228   2.964  0.00315 ** \nage                  0.226794   0.007884  28.765  &lt; 2e-16 ***\nsmokecurrent smoker -0.153974   0.077977  -1.975  0.04873 *  \nsexmale              0.315273   0.042710   7.382  4.8e-13 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.5432 on 650 degrees of freedom\nMultiple R-squared:  0.6093,    Adjusted R-squared:  0.6075 \nF-statistic: 337.9 on 3 and 650 DF,  p-value: &lt; 2.2e-16\n\n\nCode\ntab_model(model1)\n\n\n\n\n\n \nfev\n\n\nPredictors\nEstimates\nCI\np\n\n\n(Intercept)\n0.24\n0.08 – 0.40\n0.003\n\n\nage\n0.23\n0.21 – 0.24\n&lt;0.001\n\n\nsmoke [current smoker]\n-0.15\n-0.31 – -0.00\n0.049\n\n\nsex [male]\n0.32\n0.23 – 0.40\n&lt;0.001\n\n\nObservations\n654\n\n\nR2 / R2 adjusted\n0.609 / 0.608\n\n\n\n\n\n\n\n\nInterpretation of tests\n\nExercise: Create the anova table and discuss the results."
   },
   {
     "objectID": "class2.html#regression-model-with-interaction",
@@ -187,5 +187,61 @@
     "title": "Class 2",
     "section": "Splines",
     "text": "Splines\n\n\nCode\nlibrary(splines)\n\n# Fit a model using natural splines\nmodel_spline &lt;- lm(fev ~ ns(age, df = 3) + smoke + sex, data = fev)\nsummary(model_spline)\n\n\n\nCall:\nlm(formula = fev ~ ns(age, df = 3) + smoke + sex, data = fev)\n\nResiduals:\n     Min       1Q   Median       3Q      Max \n-1.51369 -0.32693 -0.03045  0.33900  1.91449 \n\nCoefficients:\n                    Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)          1.02223    0.12777   8.000 5.73e-15 ***\nns(age, df = 3)1     2.28468    0.09415  24.265  &lt; 2e-16 ***\nns(age, df = 3)2     3.29726    0.28631  11.516  &lt; 2e-16 ***\nns(age, df = 3)3     2.36534    0.15725  15.042  &lt; 2e-16 ***\nsmokecurrent smoker -0.12667    0.07705  -1.644    0.101    \nsexmale              0.32086    0.04151   7.730 4.12e-14 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.5278 on 648 degrees of freedom\nMultiple R-squared:  0.6323,    Adjusted R-squared:  0.6295 \nF-statistic: 222.9 on 5 and 648 DF,  p-value: &lt; 2.2e-16"
+  },
+  {
+    "objectID": "class3.html",
+    "href": "class3.html",
+    "title": "Class 3",
+    "section": "",
+    "text": "To get some practice using the tools we have discussed so far."
+  },
+  {
+    "objectID": "class3.html#add-table-1.",
+    "href": "class3.html#add-table-1.",
+    "title": "Class 3",
+    "section": "Add Table 1.",
+    "text": "Add Table 1."
+  },
+  {
+    "objectID": "class3.html#add-the-exploratory-analyses-here",
+    "href": "class3.html#add-the-exploratory-analyses-here",
+    "title": "Class 3",
+    "section": "Add the exploratory analyses here:",
+    "text": "Add the exploratory analyses here:\nfill in your answer here"
+  },
+  {
+    "objectID": "class3.html#age-influence-on-health-charges",
+    "href": "class3.html#age-influence-on-health-charges",
+    "title": "Class 3",
+    "section": "Age Influence on Health Charges:",
+    "text": "Age Influence on Health Charges:\nTo evaluate the effect of age on medical charges, perform a test of the linear age effect using a XX test and report the effect with the estimate, confidence interval, T-statistic, degrees of freedom, and \\(p\\)-value."
+  },
+  {
+    "objectID": "class3.html#influence-of-smoking-on-medical-expenses",
+    "href": "class3.html#influence-of-smoking-on-medical-expenses",
+    "title": "Class 3",
+    "section": "Influence of Smoking on Medical Expenses:",
+    "text": "Influence of Smoking on Medical Expenses:\nfill in your answer here"
+  },
+  {
+    "objectID": "class3.html#regional-variations-in-healthcare-charges",
+    "href": "class3.html#regional-variations-in-healthcare-charges",
+    "title": "Class 3",
+    "section": "Regional Variations in Healthcare Charges:",
+    "text": "Regional Variations in Healthcare Charges:\nfill in your answer here"
+  },
+  {
+    "objectID": "class3.html#combined-effects-of-predictors",
+    "href": "class3.html#combined-effects-of-predictors",
+    "title": "Class 3",
+    "section": "Combined Effects of Predictors:",
+    "text": "Combined Effects of Predictors:\nfill in your answer here"
+  },
+  {
+    "objectID": "class3.html#add-table-1",
+    "href": "class3.html#add-table-1",
+    "title": "Class 3",
+    "section": "Add Table 1:",
+    "text": "Add Table 1:\nfill in your answer here"
   }
 ]

@@ -1,0 +1,120 @@
+---
+title: "Class 3"
+---
+
+
+```{r setup, include=FALSE}
+# Global knitr options
+knitr::opts_chunk$set(
+  warning = FALSE, # Suppresses warnings
+  message = FALSE  # Suppresses messages
+)
+```
+
+# Objectives
+
+* To get some practice using the tools we have discussed so far.
+
+# Goal
+
+The goal will be to analyze some insurance claims data. Install the `RESI` `R` package load the package and the data.
+
+```{r, eval=FALSE}
+install.packages('RESI')
+```
+
+```{r}
+library(RESI)
+ins = insurance
+```
+
+We'll follow the outline of a paper:
+
+1. **Introduction** -- this part is roughly done for you.
+2. **Methods**
+    - Convert the research questions into conclusions you can make about parameters in a linear regression model.
+    - Table 1. What variables will you include? What tests will you perform in the table?
+    - What exploratory visualizations will you use?
+    - What model will you use to answer the research questions. Do you need to construct a test, confidence interval, or both?
+    - What visualizations will you use to evaluate the model assumptions?
+    - How will you visualize the results with the data.
+3. **Results**
+    - Follow the structure we outlined in the Methods and perform the analyses.
+4. **Discussion**
+
+# Introduction
+
+Let's use the insurance dataset to investigate the following questions:
+
+1. **Age Influence on Health Charges:**
+   - How does age affect medical charges, and is the relationship linear, or do older age groups experience disproportionately higher charges?
+<!-- 2. **Impact of Sex on Medical Charges:** -->
+<!--    - Does sex play a role in influencing the amount individuals are charged for medical expenses, and are there notable differences in charges between males and females? -->
+2. **Influence of Smoking on Medical Expenses:**
+   - How does smoking status influence medical charges, and are smokers subjected to significantly higher health-related expenses compared to non-smokers?
+3. **Regional Variations in Healthcare Charges:**
+   - Are there regional differences in medical charges, and how do regional factors potentially contribute to the variation in healthcare costs?
+4. **Combined Effects of Predictors:**
+   - What does the relationship between each variable look like after controlling for the others? **Hint:** Use added variable plots.
+   - Does smoking status affect the influence of age on medical charges?
+
+
+# Methods
+
+**Describe the overall strategy:**
+
+For all study aims, we will use `XX` model including `XX` as covariates.
+We will use `XX` plots to understand the distributions of the covariates with the outcome.
+We will evaluate the effect of each variable using XX tests and include added variable plots to visualize the unique contribution of each variable.
+**Other ideas?**
+
+
+Then describe the specific strategy for each research question. Create the results below.
+
+1. **Age Influence on Health Charges:**
+   - To evaluate the effect of age on medical charges, we will test the linear age effect using a `XX` test and report the effect with the estimate, confidence interval, T-statistic, degrees of freedom, and $p$-value.
+2. **Influence of Smoking on Medical Expenses:**
+   - *fill in your answer here*
+3. **Regional Variations in Healthcare Charges:**
+   - *fill in your answer here*
+4. **Combined Effects of Predictors:**
+   - *fill in your answer here*
+
+
+# Results
+
+**Follow the same structure as methods, presenting the results:**
+
+Describe the specific strategy for each research question and perform the analyses/create the results below.
+
+
+## Add Table 1:
+
+*fill in your answer here*
+
+## Add the exploratory analyses here:
+
+*fill in your answer here*
+
+## Age Influence on Health Charges:
+
+To evaluate the effect of age on medical charges, perform a test of the linear age effect using a `XX` test and report the effect with the estimate, confidence interval, T-statistic, degrees of freedom, and $p$-value.
+
+## Influence of Smoking on Medical Expenses:
+
+*fill in your answer here*
+
+
+## Regional Variations in Healthcare Charges:
+
+*fill in your answer here*
+
+## **Combined Effects of Predictors:**
+   
+*fill in your answer here*
+
+
+
+# Discussion
+
+
