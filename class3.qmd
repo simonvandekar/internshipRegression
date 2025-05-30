@@ -111,11 +111,41 @@ Describe the specific strategy for each research question and perform the analys
 
 ## Add Table 1:
 
-*fill in your answer here*
+```{r}
+library(tableone)
+library(table1)
+
+CreateTableOne(vars = c('charges', 'age,', 'sex', 'region', 'bmi'), 'smoker', data=ins)
+
+table1(~charges + age + sex + region + bmi | smoker, data=ins, caption='Demographics stratified by smoking status.' )
+```
 
 ## Add the exploratory analyses here:
 
-*fill in your answer here*
+
+```{r}
+library(ggplot2)
+
+# charges by smoking
+ggplot(data = ins) + geom_boxplot(mapping = aes(x = as.character(smoker), y = charges))
+# charges by age and smoking
+ggplot(data = ins) + geom_point(mapping = aes(x = age, y = charges, color = smoker))
+
+# charges by region
+ggplot(data = ins, mapping = aes(x = region, y = charges)) + geom_boxplot()
+
+hist(ins$charges)
+```
+
+
+
+### To-do before class June 2
+
+* Fit linear model with all variables from Table 1.
+* Create a model summary table.
+* Create and ANOVA table.
+* Interpret the results for age, smoking status, region.
+* Assess the overall model fit using $R^2$ and the model diagnostics plots we discussed in Class 2.
 
 ## Age Influence on Health Charges:
 

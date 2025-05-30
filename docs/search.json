@@ -207,7 +207,7 @@
     "href": "class3.html#add-the-exploratory-analyses-here",
     "title": "Class 3",
     "section": "Add the exploratory analyses here:",
-    "text": "Add the exploratory analyses here:\nfill in your answer here"
+    "text": "Add the exploratory analyses here:\n\n\nCode\nlibrary(ggplot2)\n\n# charges by smoking\nggplot(data = ins) + geom_boxplot(mapping = aes(x = as.character(smoker), y = charges))\n\n\n\n\n\nCode\n# charges by age and smoking\nggplot(data = ins) + geom_point(mapping = aes(x = age, y = charges, color = smoker))\n\n\n\n\n\nCode\n# charges by region\nggplot(data = ins, mapping = aes(x = region, y = charges)) + geom_boxplot()\n\n\n\n\n\nCode\nhist(ins$charges)\n\n\n\n\n\n\nTo-do before class June 2\n\nFit linear model with all variables from Table 1.\nCreate a model summary table.\nCreate and ANOVA table.\nInterpret the results for age, smoking status, region.\nAssess the overall model fit using \\(R^2\\) and the model diagnostics plots we discussed in Class 2."
   },
   {
     "objectID": "class3.html#age-influence-on-health-charges",
@@ -242,6 +242,6 @@
     "href": "class3.html#add-table-1",
     "title": "Class 3",
     "section": "Add Table 1:",
-    "text": "Add Table 1:\nfill in your answer here"
+    "text": "Add Table 1:\n\n\nCode\nlibrary(tableone)\nlibrary(table1)\n\nCreateTableOne(vars = c('charges', 'age,', 'sex', 'region', 'bmi'), 'smoker', data=ins)\n\n\n                     Stratified by smoker\n                      0                 1                   p      test\n  n                      1064                274                       \n  charges (mean (SD)) 8434.27 (5993.78) 32050.23 (11541.55) &lt;0.001     \n  sex = male (%)          517 (48.6)         159 (58.0)      0.007     \n  region (%)                                                 0.062     \n     northeast            257 (24.2)          67 (24.5)                \n     northwest            267 (25.1)          58 (21.2)                \n     southeast            273 (25.7)          91 (33.2)                \n     southwest            267 (25.1)          58 (21.2)                \n  bmi (mean (SD))       30.65 (6.04)       30.71 (6.32)      0.891     \n\n\nCode\ntable1(~charges + age + sex + region + bmi | smoker, data=ins, caption='Demographics stratified by smoking status.' )\n\n\n\n\n\nDemographics stratified by smoking status.\n\n\n\n\n\n\n\n\n\n0\n(N=1064)\n1\n(N=274)\nOverall\n(N=1338)\n\n\n\n\ncharges\n\n\n\n\n\nMean (SD)\n8430 (5990)\n32100 (11500)\n13300 (12100)\n\n\nMedian [Min, Max]\n7350 [1120, 36900]\n34500 [12800, 63800]\n9380 [1120, 63800]\n\n\nage\n\n\n\n\n\nMean (SD)\n39.4 (14.1)\n38.5 (13.9)\n39.2 (14.0)\n\n\nMedian [Min, Max]\n40.0 [18.0, 64.0]\n38.0 [18.0, 64.0]\n39.0 [18.0, 64.0]\n\n\nsex\n\n\n\n\n\nfemale\n547 (51.4%)\n115 (42.0%)\n662 (49.5%)\n\n\nmale\n517 (48.6%)\n159 (58.0%)\n676 (50.5%)\n\n\nregion\n\n\n\n\n\nnortheast\n257 (24.2%)\n67 (24.5%)\n324 (24.2%)\n\n\nnorthwest\n267 (25.1%)\n58 (21.2%)\n325 (24.3%)\n\n\nsoutheast\n273 (25.7%)\n91 (33.2%)\n364 (27.2%)\n\n\nsouthwest\n267 (25.1%)\n58 (21.2%)\n325 (24.3%)\n\n\nbmi\n\n\n\n\n\nMean (SD)\n30.7 (6.04)\n30.7 (6.32)\n30.7 (6.10)\n\n\nMedian [Min, Max]\n30.4 [16.0, 53.1]\n30.4 [17.2, 52.6]\n30.4 [16.0, 53.1]"
   }
 ]

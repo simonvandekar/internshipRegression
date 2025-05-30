@@ -94,6 +94,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+<link href="site_libs/table1-1.0/table1_defaults.css" rel="stylesheet">
+
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
@@ -171,7 +173,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a>
   <ul class="collapse">
   <li><a href="#add-table-1" id="toc-add-table-1" class="nav-link" data-scroll-target="#add-table-1">Add Table 1:</a></li>
-  <li><a href="#add-the-exploratory-analyses-here" id="toc-add-the-exploratory-analyses-here" class="nav-link" data-scroll-target="#add-the-exploratory-analyses-here">Add the exploratory analyses here:</a></li>
+  <li><a href="#add-the-exploratory-analyses-here" id="toc-add-the-exploratory-analyses-here" class="nav-link" data-scroll-target="#add-the-exploratory-analyses-here">Add the exploratory analyses here:</a>
+  <ul class="collapse">
+  <li><a href="#to-do-before-class-june-2" id="toc-to-do-before-class-june-2" class="nav-link" data-scroll-target="#to-do-before-class-june-2">To-do before class June 2</a></li>
+  </ul></li>
   <li><a href="#age-influence-on-health-charges" id="toc-age-influence-on-health-charges" class="nav-link" data-scroll-target="#age-influence-on-health-charges">Age Influence on Health Charges:</a></li>
   <li><a href="#influence-of-smoking-on-medical-expenses" id="toc-influence-of-smoking-on-medical-expenses" class="nav-link" data-scroll-target="#influence-of-smoking-on-medical-expenses">Influence of Smoking on Medical Expenses:</a></li>
   <li><a href="#regional-variations-in-healthcare-charges" id="toc-regional-variations-in-healthcare-charges" class="nav-link" data-scroll-target="#regional-variations-in-healthcare-charges">Regional Variations in Healthcare Charges:</a></li>
@@ -323,11 +328,210 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Describe the specific strategy for each research question and perform the analyses/create the results below.</p>
 <section id="add-table-1" class="level2">
 <h2 class="anchored" data-anchor-id="add-table-1">Add Table 1:</h2>
-<p><em>fill in your answer here</em></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tableone)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(table1)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">CreateTableOne</span>(<span class="at">vars =</span> <span class="fu">c</span>(<span class="st">'charges'</span>, <span class="st">'age,'</span>, <span class="st">'sex'</span>, <span class="st">'region'</span>, <span class="st">'bmi'</span>), <span class="st">'smoker'</span>, <span class="at">data=</span>ins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     Stratified by smoker
+                      0                 1                   p      test
+  n                      1064                274                       
+  charges (mean (SD)) 8434.27 (5993.78) 32050.23 (11541.55) &lt;0.001     
+  sex = male (%)          517 (48.6)         159 (58.0)      0.007     
+  region (%)                                                 0.062     
+     northeast            257 (24.2)          67 (24.5)                
+     northwest            267 (25.1)          58 (21.2)                
+     southeast            273 (25.7)          91 (33.2)                
+     southwest            267 (25.1)          58 (21.2)                
+  bmi (mean (SD))       30.65 (6.04)       30.71 (6.32)      0.891     </code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table1</span>(<span class="sc">~</span>charges <span class="sc">+</span> age <span class="sc">+</span> sex <span class="sc">+</span> region <span class="sc">+</span> bmi <span class="sc">|</span> smoker, <span class="at">data=</span>ins, <span class="at">caption=</span><span class="st">'Demographics stratified by smoking status.'</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+
+<div class="Rtable1">
+<table class="Rtable1 table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Demographics stratified by smoking status.</caption>
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th class="rowlabel firstrow lastrow" data-quarto-table-cell-role="th"></th>
+<th class="firstrow lastrow" data-quarto-table-cell-role="th"><span class="stratlabel">0<br>
+<span class="stratn">(N=1064)</span></span></th>
+<th class="firstrow lastrow" data-quarto-table-cell-role="th"><span class="stratlabel">1<br>
+<span class="stratn">(N=274)</span></span></th>
+<th class="firstrow lastrow" data-quarto-table-cell-role="th"><span class="stratlabel">Overall<br>
+<span class="stratn">(N=1338)</span></span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td class="rowlabel firstrow">charges</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="even">
+<td class="rowlabel">Mean (SD)</td>
+<td>8430 (5990)</td>
+<td>32100 (11500)</td>
+<td>13300 (12100)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel lastrow">Median [Min, Max]</td>
+<td class="lastrow">7350 [1120, 36900]</td>
+<td class="lastrow">34500 [12800, 63800]</td>
+<td class="lastrow">9380 [1120, 63800]</td>
+</tr>
+<tr class="even">
+<td class="rowlabel firstrow">age</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">Mean (SD)</td>
+<td>39.4 (14.1)</td>
+<td>38.5 (13.9)</td>
+<td>39.2 (14.0)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel lastrow">Median [Min, Max]</td>
+<td class="lastrow">40.0 [18.0, 64.0]</td>
+<td class="lastrow">38.0 [18.0, 64.0]</td>
+<td class="lastrow">39.0 [18.0, 64.0]</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel firstrow">sex</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="even">
+<td class="rowlabel">female</td>
+<td>547 (51.4%)</td>
+<td>115 (42.0%)</td>
+<td>662 (49.5%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel lastrow">male</td>
+<td class="lastrow">517 (48.6%)</td>
+<td class="lastrow">159 (58.0%)</td>
+<td class="lastrow">676 (50.5%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel firstrow">region</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">northeast</td>
+<td>257 (24.2%)</td>
+<td>67 (24.5%)</td>
+<td>324 (24.2%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel">northwest</td>
+<td>267 (25.1%)</td>
+<td>58 (21.2%)</td>
+<td>325 (24.3%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">southeast</td>
+<td>273 (25.7%)</td>
+<td>91 (33.2%)</td>
+<td>364 (27.2%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel lastrow">southwest</td>
+<td class="lastrow">267 (25.1%)</td>
+<td class="lastrow">58 (21.2%)</td>
+<td class="lastrow">325 (24.3%)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel firstrow">bmi</td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="even">
+<td class="rowlabel">Mean (SD)</td>
+<td>30.7 (6.04)</td>
+<td>30.7 (6.32)</td>
+<td>30.7 (6.10)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel lastrow">Median [Min, Max]</td>
+<td class="lastrow">30.4 [16.0, 53.1]</td>
+<td class="lastrow">30.4 [17.2, 52.6]</td>
+<td class="lastrow">30.4 [16.0, 53.1]</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
 </section>
 <section id="add-the-exploratory-analyses-here" class="level2">
 <h2 class="anchored" data-anchor-id="add-the-exploratory-analyses-here">Add the exploratory analyses here:</h2>
-<p><em>fill in your answer here</em></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># charges by smoking</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ins) <span class="sc">+</span> <span class="fu">geom_boxplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.character</span>(smoker), <span class="at">y =</span> charges))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="class3_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># charges by age and smoking</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ins) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> charges, <span class="at">color =</span> smoker))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="class3_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid" width="672"></p>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># charges by region</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ins, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> region, <span class="at">y =</span> charges)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="class3_files/figure-html/unnamed-chunk-4-3.png" class="img-fluid" width="672"></p>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(ins<span class="sc">$</span>charges)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="class3_files/figure-html/unnamed-chunk-4-4.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<section id="to-do-before-class-june-2" class="level3">
+<h3 class="anchored" data-anchor-id="to-do-before-class-june-2">To-do before class June 2</h3>
+<ul>
+<li>Fit linear model with all variables from Table 1.</li>
+<li>Create a model summary table.</li>
+<li>Create and ANOVA table.</li>
+<li>Interpret the results for age, smoking status, region.</li>
+<li>Assess the overall model fit using <span class="math inline">\(R^2\)</span> and the model diagnostics plots we discussed in Class 2.</li>
+</ul>
+</section>
 </section>
 <section id="age-influence-on-health-charges" class="level2">
 <h2 class="anchored" data-anchor-id="age-influence-on-health-charges">Age Influence on Health Charges:</h2>
