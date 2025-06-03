@@ -176,11 +176,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#add-the-exploratory-analyses-here" id="toc-add-the-exploratory-analyses-here" class="nav-link" data-scroll-target="#add-the-exploratory-analyses-here">Add the exploratory analyses here:</a>
   <ul class="collapse">
   <li><a href="#to-do-before-class-june-2" id="toc-to-do-before-class-june-2" class="nav-link" data-scroll-target="#to-do-before-class-june-2">To-do before class June 2</a></li>
+  <li><a href="#evaluate-model-fit" id="toc-evaluate-model-fit" class="nav-link" data-scroll-target="#evaluate-model-fit">Evaluate model fit</a></li>
   </ul></li>
   <li><a href="#age-influence-on-health-charges" id="toc-age-influence-on-health-charges" class="nav-link" data-scroll-target="#age-influence-on-health-charges">Age Influence on Health Charges:</a></li>
   <li><a href="#influence-of-smoking-on-medical-expenses" id="toc-influence-of-smoking-on-medical-expenses" class="nav-link" data-scroll-target="#influence-of-smoking-on-medical-expenses">Influence of Smoking on Medical Expenses:</a></li>
   <li><a href="#regional-variations-in-healthcare-charges" id="toc-regional-variations-in-healthcare-charges" class="nav-link" data-scroll-target="#regional-variations-in-healthcare-charges">Regional Variations in Healthcare Charges:</a></li>
   <li><a href="#combined-effects-of-predictors" id="toc-combined-effects-of-predictors" class="nav-link" data-scroll-target="#combined-effects-of-predictors"><strong>Combined Effects of Predictors:</strong></a></li>
+  </ul></li>
+  <li><a href="#relaxing-assumptions" id="toc-relaxing-assumptions" class="nav-link" data-scroll-target="#relaxing-assumptions">Relaxing assumptions</a>
+  <ul class="collapse">
+  <li><a href="#nonlinearity" id="toc-nonlinearity" class="nav-link" data-scroll-target="#nonlinearity">Nonlinearity</a></li>
+  <li><a href="#equal-variance-assumption" id="toc-equal-variance-assumption" class="nav-link" data-scroll-target="#equal-variance-assumption">Equal variance assumption</a></li>
   </ul></li>
   <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">Discussion</a></li>
   </ul>
@@ -528,14 +534,190 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Fit linear model with all variables from Table 1.</li>
 <li>Create a model summary table.</li>
 <li>Create and ANOVA table.</li>
-<li>Interpret the results for age, smoking status, region.</li>
 <li>Assess the overall model fit using <span class="math inline">\(R^2\)</span> and the model diagnostics plots we discussed in Class 2.</li>
+<li>Interpret the results for age, smoking status, region.</li>
 </ul>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(charges <span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> region <span class="sc">+</span> bmi <span class="sc">+</span> smoker, <span class="at">data =</span> ins)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(model)</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>sjPlot<span class="sc">::</span><span class="fu">tab_model</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: normal; font-weight: bold; padding: 0.2cm;">&nbsp;</td>
+<td colspan="3" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: normal; font-weight: bold; padding: 0.2cm;">charges</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; border-bottom: 1px solid; font-style: italic; font-weight: normal;">Predictors</td>
+<td style="text-align: center; border-bottom: 1px solid; font-style: italic; font-weight: normal;">Estimates</td>
+<td style="text-align: center; border-bottom: 1px solid; font-style: italic; font-weight: normal;">CI</td>
+<td style="text-align: center; border-bottom: 1px solid; font-style: italic; font-weight: normal;">p</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">(Intercept)</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">-11556.96</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">-13490.51&nbsp;–&nbsp;-9623.41</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;"><strong>&lt;0.001</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">age</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">258.54</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">235.12&nbsp;–&nbsp;281.96</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;"><strong>&lt;0.001</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">sex [male]</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">-111.57</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">-767.30&nbsp;–&nbsp;544.16</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">0.739</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">region [northwest]</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">-304.10</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">-1241.85&nbsp;–&nbsp;633.64</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">0.525</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">region [southeast]</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">-1039.20</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">-1982.12&nbsp;–&nbsp;-96.29</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;"><strong>0.031</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">region [southwest]</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">-916.44</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">-1857.53&nbsp;–&nbsp;24.65</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">0.056</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">bmi</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">340.46</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">284.13&nbsp;–&nbsp;396.79</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;"><strong>&lt;0.001</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">smoker</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">23862.91</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">23049.13&nbsp;–&nbsp;24676.68</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;"><strong>&lt;0.001</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top; padding-top: 0.1cm; padding-bottom: 0.1cm; border-top: 1px solid;">Observations</td>
+<td colspan="3" style="text-align: left; padding: 0.2cm; vertical-align: top; padding-top: 0.1cm; padding-bottom: 0.1cm; border-top: 1px solid;">1338</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top; padding-top: 0.1cm; padding-bottom: 0.1cm;">R<sup>2</sup> / R<sup>2</sup> adjusted</td>
+<td colspan="3" style="text-align: left; padding: 0.2cm; vertical-align: top; padding-top: 0.1cm; padding-bottom: 0.1cm;">0.749 / 0.747</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">anova</span>(model), <span class="at">format=</span><span class="st">'html'</span>, <span class="at">caption=</span><span class="st">'ANOVA table'</span>, <span class="at">digits=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<caption>ANOVA table</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Df</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Sum Sq</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Mean Sq</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">F value</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Pr(&gt;F)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">age</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">17530192183</td>
+<td style="text-align: right;">17530192183</td>
+<td style="text-align: right;">473.14</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sex</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">791665482</td>
+<td style="text-align: right;">791665482</td>
+<td style="text-align: right;">21.37</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">region</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1378513254</td>
+<td style="text-align: right;">459504418</td>
+<td style="text-align: right;">12.40</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">bmi</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4489912340</td>
+<td style="text-align: right;">4489912340</td>
+<td style="text-align: right;">121.18</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">smoker</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">122606858852</td>
+<td style="text-align: right;">122606858852</td>
+<td style="text-align: right;">3309.19</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Residuals</td>
+<td style="text-align: right;">1330</td>
+<td style="text-align: right;">49277079458</td>
+<td style="text-align: right;">37050436</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</section>
+<section id="evaluate-model-fit" class="level3">
+<h3 class="anchored" data-anchor-id="evaluate-model-fit">Evaluate model fit</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="class3_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="class3_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="class3_files/figure-html/unnamed-chunk-6-3.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="class3_files/figure-html/unnamed-chunk-6-4.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
 </section>
 <section id="age-influence-on-health-charges" class="level2">
 <h2 class="anchored" data-anchor-id="age-influence-on-health-charges">Age Influence on Health Charges:</h2>
-<p>To evaluate the effect of age on medical charges, perform a test of the linear age effect using a <code>XX</code> test and report the effect with the estimate, confidence interval, T-statistic, degrees of freedom, and <span class="math inline">\(p\)</span>-value.</p>
+<p>To evaluate the effect of age on medical charges, we performed a test of the linear age effect using a T-test and report the effect with the estimate, confidence interval, T-statistic, degrees of freedom, and <span class="math inline">\(p\)</span>-value.</p>
+<p>There was evidence that age was positive associated with medical charges (b=258.54, StdEr=11.94, <span class="math inline">\(T=21.66\)</span>, <span class="math inline">\(df=1300\)</span>, <span class="math inline">\(p &lt;0.001\)</span>).</p>
 </section>
 <section id="influence-of-smoking-on-medical-expenses" class="level2">
 <h2 class="anchored" data-anchor-id="influence-of-smoking-on-medical-expenses">Influence of Smoking on Medical Expenses:</h2>
@@ -547,7 +729,200 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="combined-effects-of-predictors" class="level2">
 <h2 class="anchored" data-anchor-id="combined-effects-of-predictors"><strong>Combined Effects of Predictors:</strong></h2>
-<p><em>fill in your answer here</em></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(charges <span class="sc">~</span> age <span class="sc">+</span> smoker <span class="sc">+</span> sex <span class="sc">+</span> region <span class="sc">+</span> bmi <span class="sc">+</span> age <span class="sc">*</span> smoker, <span class="at">data =</span> ins)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = charges ~ age + smoker + sex + region + bmi + age * 
+    smoker, data = ins)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-11839  -3021  -1000   1582  29245 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)     -11219.79    1007.66 -11.134   &lt;2e-16 ***
+age                249.00      13.36  18.645   &lt;2e-16 ***
+smoker           22043.47    1217.87  18.100   &lt;2e-16 ***
+sexmale           -115.76     334.08  -0.346   0.7290    
+regionnorthwest   -314.54     477.78  -0.658   0.5104    
+regionsoutheast  -1065.29     480.65  -2.216   0.0268 *  
+regionsouthwest   -899.36     479.57  -1.875   0.0610 .  
+bmi                341.94      28.71  11.909   &lt;2e-16 ***
+age:smoker          47.09      29.64   1.589   0.1123    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 6083 on 1329 degrees of freedom
+Multiple R-squared:  0.7492,    Adjusted R-squared:  0.7476 
+F-statistic: 496.1 on 8 and 1329 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="relaxing-assumptions" class="level1">
+<h1>Relaxing assumptions</h1>
+<section id="nonlinearity" class="level2">
+<h2 class="anchored" data-anchor-id="nonlinearity">Nonlinearity</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>modelNonlinear <span class="ot">&lt;-</span> <span class="fu">lm</span>(charges <span class="sc">~</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> smoker <span class="sc">+</span> sex <span class="sc">+</span> region <span class="sc">+</span> bmi, <span class="at">data =</span> ins)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelNonlinear)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = charges ~ age + I(age^2) + smoker + sex + region + 
+    bmi, data = ins)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-11392.7  -2976.4   -889.7   1399.3  29893.5 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)     -7959.9502  1673.5181  -4.756 2.19e-06 ***
+age                54.3396    77.7892   0.699  0.48496    
+I(age^2)            2.5799     0.9712   2.656  0.00799 ** 
+smoker          23873.5770   413.9010  57.679  &lt; 2e-16 ***
+sexmale          -111.7004   333.4999  -0.335  0.73773    
+regionnorthwest  -302.6170   476.9289  -0.635  0.52586    
+regionsoutheast -1037.8522   479.5590  -2.164  0.03063 *  
+regionsouthwest  -904.7631   478.6525  -1.890  0.05894 .  
+bmi               338.1341    28.6623  11.797  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 6073 on 1329 degrees of freedom
+Multiple R-squared:   0.75, Adjusted R-squared:  0.7485 
+F-statistic: 498.4 on 8 and 1329 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(splines)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>modelNonlinear <span class="ot">&lt;-</span> <span class="fu">lm</span>(charges <span class="sc">~</span> <span class="fu">ns</span>(age, <span class="at">df=</span><span class="dv">5</span>) <span class="sc">+</span> smoker <span class="sc">+</span> sex <span class="sc">+</span> region <span class="sc">+</span> bmi, <span class="at">data =</span> ins)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelNonlinear)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = charges ~ ns(age, df = 5) + smoker + sex + region + 
+    bmi, data = ins)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-11710.5  -3034.1   -943.8   1424.4  29917.8 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)      -6668.64    1029.19  -6.480 1.29e-10 ***
+ns(age, df = 5)1  2469.48     935.37   2.640  0.00839 ** 
+ns(age, df = 5)2  5857.86    1034.36   5.663 1.82e-08 ***
+ns(age, df = 5)3  8867.01     887.72   9.989  &lt; 2e-16 ***
+ns(age, df = 5)4 13879.92    1449.51   9.576  &lt; 2e-16 ***
+ns(age, df = 5)5 10589.53     816.34  12.972  &lt; 2e-16 ***
+smoker           23905.65     414.54  57.667  &lt; 2e-16 ***
+sexmale           -115.47     333.31  -0.346  0.72907    
+regionnorthwest   -318.29     476.82  -0.668  0.50455    
+regionsoutheast  -1025.56     479.37  -2.139  0.03258 *  
+regionsouthwest   -925.60     478.59  -1.934  0.05332 .  
+bmi                338.71      28.65  11.821  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 6070 on 1326 degrees of freedom
+Multiple R-squared:  0.7509,    Adjusted R-squared:  0.7488 
+F-statistic: 363.3 on 11 and 1326 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(modelNonlinear)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: charges
+                  Df     Sum Sq    Mean Sq   F value Pr(&gt;F)    
+ns(age, df = 5)    5 1.8063e+10 3.6127e+09   98.0653 &lt;2e-16 ***
+smoker             1 1.2387e+11 1.2387e+11 3362.4086 &lt;2e-16 ***
+sex                1 1.9614e+06 1.9614e+06    0.0532 0.8175    
+region             3 1.4310e+08 4.7699e+07    1.2948 0.2747    
+bmi                1 5.1478e+09 5.1478e+09  139.7367 &lt;2e-16 ***
+Residuals       1326 4.8849e+10 3.6839e+07                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(modelNonlinear)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="class3_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="class3_files/figure-html/unnamed-chunk-8-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="class3_files/figure-html/unnamed-chunk-8-3.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="class3_files/figure-html/unnamed-chunk-8-4.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="equal-variance-assumption" class="level2">
+<h2 class="anchored" data-anchor-id="equal-variance-assumption">Equal variance assumption</h2>
+<ul>
+<li>Use Robust standard errors. Also called Heteroskedasticity consistent standard errors or sandwich standard errors.</li>
+</ul>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sandwich)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">Anova</span>(modelNonlinear)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Anova Table (Type II tests)
+
+Response: charges
+                    Sum Sq   Df   F value Pr(&gt;F)    
+ns(age, df = 5) 1.7807e+10    5   96.6735 &lt;2e-16 ***
+smoker          1.2251e+11    1 3325.5160 &lt;2e-16 ***
+sex             4.4215e+06    1    0.1200 0.7291    
+region          2.2792e+08    3    2.0622 0.1034    
+bmi             5.1478e+09    1  139.7367 &lt;2e-16 ***
+Residuals       4.8849e+10 1326                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">Anova</span>(modelNonlinear, <span class="at">vcov. =</span> vcovHC)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Deviance Table (Type II tests)
+
+Response: charges
+                  Df         F Pr(&gt;F)    
+ns(age, df = 5)    5   95.9979 &lt;2e-16 ***
+smoker             1 1706.6078 &lt;2e-16 ***
+sex                1    0.1181 0.7311    
+region             3    1.9870 0.1141    
+bmi                1  113.4421 &lt;2e-16 ***
+Residuals       1326                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
 </section>
 </section>
 <section id="discussion" class="level1">

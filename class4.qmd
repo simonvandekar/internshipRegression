@@ -1,0 +1,101 @@
+---
+title: "Class 4: Logistic regression"
+editor: visual
+---
+
+# Objectives
+
+* Interpret logistic regression coefficients.
+* Evaluate
+
+# Logistic regression
+
+
+
+```{r}
+library(RESI)
+ins = insurance
+
+glmModel = glm(smoker ~ age + sex + region, data=ins, family=binomial())
+summary(glmModel)
+```
+
+
+
+# Interpreting Logistic Regression Interpretation
+
+
+## Model
+   Logistic regression model predicts the log odds of the binary outcome (e.g., whether an individual is a smoker or not) as a linear combination of the predictor variables.
+
+   The model can be formulated as:
+   $$
+   \text{logit}(p) = \log\left(\frac{p}{1 - p}\right) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k
+   $$
+   where:
+   - $ p $ is the probability of the outcome (smoking = 1).
+   - $ X_1, X_2, \ldots, X_k $ are the predictor variables (age, sex, region).
+   - $ \beta_0 $ is the intercept.
+   - $ \beta_1, \beta_2, \ldots, \beta_k $ are the coefficients for the predictors.
+
+## Intepreting coefficients on the log-odds scale
+   Each coefficient $ \beta_i $ represents the change in the log odds of the outcome for a one-unit increase in the corresponding predictor variable $ X_i $, holding all other predictors constant. 
+
+   - **For continuous predictors (e.g., Age)**:
+     - If $ \beta_1 =-0.004$ (age): for every 1-year increase in age, the log odds of being a smoker increase by 0.05.
+
+   - **For categorical predictors (e.g., Sex and Region)**:
+     - If $ \beta_2 = 0.37$, then being male decreases the log odds of being a smoker by 1.5.
+
+## Interpreting coefficients on the odds scale
+   - To convert the log odds to odds, we exponentiate:
+   \[
+   \text{odds} = e^{\text{logit}(p)} = e^{\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k}
+   \]
+
+   - **Odds Ratio (OR)**:
+     - The odds ratio for a one-unit increase in $ X_i $ is given by:
+     \[
+     \text{OR} = e^{\beta_i}
+     \]
+     - This tells us how the odds of the outcome change with a one-unit increase in $ X_i $:
+       - If $ \text{OR} > 1 $, the odds of being a smoker increase (more likely).
+       - If $ \text{OR} < 1 $, the odds of being a smoker decrease (less likely).
+       - If $ \text{OR} = 1 $, there is no change in the odds.
+
+
+
+## Example visualization
+
+```{r}
+# Load necessary libraries
+library(ggplot2)
+library(dplyr)
+
+# Create a new dataframe for predictions
+ins$predicted_prob = predict(glmModel, type = "link")
+
+# Create a visualization of predicted probabilities against age
+ggplot(ins, aes(x = age, y = predicted_prob, color = sex)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = "loess", se = FALSE, color = "black") +
+  labs(title = "Predicted Probability of Smoking by Age",
+       x = "Age",
+       y = "Predicted Probability of Smoking") +
+  theme_minimal()
+```
+
+
+
+## Robust standard errors
+
+I like to use robust standard errors for testing whenever I can. They are also possible for the `glm` function.
+
+```{r}
+library(sandwich) 
+library(lmtest)
+
+coeftest(glmModel, vcov = vcovHC(glmModel))
+
+car::Anova(glmModel, vcov = vcovHC(glmModel))
+```

@@ -207,14 +207,14 @@
     "href": "class3.html#add-the-exploratory-analyses-here",
     "title": "Class 3",
     "section": "Add the exploratory analyses here:",
-    "text": "Add the exploratory analyses here:\n\n\nCode\nlibrary(ggplot2)\n\n# charges by smoking\nggplot(data = ins) + geom_boxplot(mapping = aes(x = as.character(smoker), y = charges))\n\n\n\n\n\nCode\n# charges by age and smoking\nggplot(data = ins) + geom_point(mapping = aes(x = age, y = charges, color = smoker))\n\n\n\n\n\nCode\n# charges by region\nggplot(data = ins, mapping = aes(x = region, y = charges)) + geom_boxplot()\n\n\n\n\n\nCode\nhist(ins$charges)\n\n\n\n\n\n\nTo-do before class June 2\n\nFit linear model with all variables from Table 1.\nCreate a model summary table.\nCreate and ANOVA table.\nInterpret the results for age, smoking status, region.\nAssess the overall model fit using \\(R^2\\) and the model diagnostics plots we discussed in Class 2."
+    "text": "Add the exploratory analyses here:\n\n\nCode\nlibrary(ggplot2)\n\n# charges by smoking\nggplot(data = ins) + geom_boxplot(mapping = aes(x = as.character(smoker), y = charges))\n\n\n\n\n\nCode\n# charges by age and smoking\nggplot(data = ins) + geom_point(mapping = aes(x = age, y = charges, color = smoker))\n\n\n\n\n\nCode\n# charges by region\nggplot(data = ins, mapping = aes(x = region, y = charges)) + geom_boxplot()\n\n\n\n\n\nCode\nhist(ins$charges)\n\n\n\n\n\n\nTo-do before class June 2\n\nFit linear model with all variables from Table 1.\nCreate a model summary table.\nCreate and ANOVA table.\nAssess the overall model fit using \\(R^2\\) and the model diagnostics plots we discussed in Class 2.\nInterpret the results for age, smoking status, region.\n\n\n\nCode\nmodel &lt;- lm(charges ~ age + sex + region + bmi + smoker, data = ins)\n#summary(model)\nsjPlot::tab_model(model)\n\n\n\n\n\n \ncharges\n\n\nPredictors\nEstimates\nCI\np\n\n\n(Intercept)\n-11556.96\n-13490.51 – -9623.41\n&lt;0.001\n\n\nage\n258.54\n235.12 – 281.96\n&lt;0.001\n\n\nsex [male]\n-111.57\n-767.30 – 544.16\n0.739\n\n\nregion [northwest]\n-304.10\n-1241.85 – 633.64\n0.525\n\n\nregion [southeast]\n-1039.20\n-1982.12 – -96.29\n0.031\n\n\nregion [southwest]\n-916.44\n-1857.53 – 24.65\n0.056\n\n\nbmi\n340.46\n284.13 – 396.79\n&lt;0.001\n\n\nsmoker\n23862.91\n23049.13 – 24676.68\n&lt;0.001\n\n\nObservations\n1338\n\n\nR2 / R2 adjusted\n0.749 / 0.747\n\n\n\n\n\n\n\nCode\nlibrary(kableExtra)\nkable(anova(model), format='html', caption='ANOVA table', digits=2)\n\n\n\nANOVA table\n\n\n\nDf\nSum Sq\nMean Sq\nF value\nPr(&gt;F)\n\n\n\n\nage\n1\n17530192183\n17530192183\n473.14\n0\n\n\nsex\n1\n791665482\n791665482\n21.37\n0\n\n\nregion\n3\n1378513254\n459504418\n12.40\n0\n\n\nbmi\n1\n4489912340\n4489912340\n121.18\n0\n\n\nsmoker\n1\n122606858852\n122606858852\n3309.19\n0\n\n\nResiduals\n1330\n49277079458\n37050436\nNA\nNA\n\n\n\n\n\n\n\n\n\nEvaluate model fit\n\n\nCode\nplot(model)"
   },
   {
     "objectID": "class3.html#age-influence-on-health-charges",
     "href": "class3.html#age-influence-on-health-charges",
     "title": "Class 3",
     "section": "Age Influence on Health Charges:",
-    "text": "Age Influence on Health Charges:\nTo evaluate the effect of age on medical charges, perform a test of the linear age effect using a XX test and report the effect with the estimate, confidence interval, T-statistic, degrees of freedom, and \\(p\\)-value."
+    "text": "Age Influence on Health Charges:\nTo evaluate the effect of age on medical charges, we performed a test of the linear age effect using a T-test and report the effect with the estimate, confidence interval, T-statistic, degrees of freedom, and \\(p\\)-value.\nThere was evidence that age was positive associated with medical charges (b=258.54, StdEr=11.94, \\(T=21.66\\), \\(df=1300\\), \\(p &lt;0.001\\))."
   },
   {
     "objectID": "class3.html#influence-of-smoking-on-medical-expenses",
@@ -235,7 +235,7 @@
     "href": "class3.html#combined-effects-of-predictors",
     "title": "Class 3",
     "section": "Combined Effects of Predictors:",
-    "text": "Combined Effects of Predictors:\nfill in your answer here"
+    "text": "Combined Effects of Predictors:\n\n\nCode\nmodel &lt;- lm(charges ~ age + smoker + sex + region + bmi + age * smoker, data = ins)\nsummary(model)\n\n\n\nCall:\nlm(formula = charges ~ age + smoker + sex + region + bmi + age * \n    smoker, data = ins)\n\nResiduals:\n   Min     1Q Median     3Q    Max \n-11839  -3021  -1000   1582  29245 \n\nCoefficients:\n                 Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)     -11219.79    1007.66 -11.134   &lt;2e-16 ***\nage                249.00      13.36  18.645   &lt;2e-16 ***\nsmoker           22043.47    1217.87  18.100   &lt;2e-16 ***\nsexmale           -115.76     334.08  -0.346   0.7290    \nregionnorthwest   -314.54     477.78  -0.658   0.5104    \nregionsoutheast  -1065.29     480.65  -2.216   0.0268 *  \nregionsouthwest   -899.36     479.57  -1.875   0.0610 .  \nbmi                341.94      28.71  11.909   &lt;2e-16 ***\nage:smoker          47.09      29.64   1.589   0.1123    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 6083 on 1329 degrees of freedom\nMultiple R-squared:  0.7492,    Adjusted R-squared:  0.7476 \nF-statistic: 496.1 on 8 and 1329 DF,  p-value: &lt; 2.2e-16"
   },
   {
     "objectID": "class3.html#add-table-1",
@@ -243,5 +243,68 @@
     "title": "Class 3",
     "section": "Add Table 1:",
     "text": "Add Table 1:\n\n\nCode\nlibrary(tableone)\nlibrary(table1)\n\nCreateTableOne(vars = c('charges', 'age,', 'sex', 'region', 'bmi'), 'smoker', data=ins)\n\n\n                     Stratified by smoker\n                      0                 1                   p      test\n  n                      1064                274                       \n  charges (mean (SD)) 8434.27 (5993.78) 32050.23 (11541.55) &lt;0.001     \n  sex = male (%)          517 (48.6)         159 (58.0)      0.007     \n  region (%)                                                 0.062     \n     northeast            257 (24.2)          67 (24.5)                \n     northwest            267 (25.1)          58 (21.2)                \n     southeast            273 (25.7)          91 (33.2)                \n     southwest            267 (25.1)          58 (21.2)                \n  bmi (mean (SD))       30.65 (6.04)       30.71 (6.32)      0.891     \n\n\nCode\ntable1(~charges + age + sex + region + bmi | smoker, data=ins, caption='Demographics stratified by smoking status.' )\n\n\n\n\n\nDemographics stratified by smoking status.\n\n\n\n\n\n\n\n\n\n0\n(N=1064)\n1\n(N=274)\nOverall\n(N=1338)\n\n\n\n\ncharges\n\n\n\n\n\nMean (SD)\n8430 (5990)\n32100 (11500)\n13300 (12100)\n\n\nMedian [Min, Max]\n7350 [1120, 36900]\n34500 [12800, 63800]\n9380 [1120, 63800]\n\n\nage\n\n\n\n\n\nMean (SD)\n39.4 (14.1)\n38.5 (13.9)\n39.2 (14.0)\n\n\nMedian [Min, Max]\n40.0 [18.0, 64.0]\n38.0 [18.0, 64.0]\n39.0 [18.0, 64.0]\n\n\nsex\n\n\n\n\n\nfemale\n547 (51.4%)\n115 (42.0%)\n662 (49.5%)\n\n\nmale\n517 (48.6%)\n159 (58.0%)\n676 (50.5%)\n\n\nregion\n\n\n\n\n\nnortheast\n257 (24.2%)\n67 (24.5%)\n324 (24.2%)\n\n\nnorthwest\n267 (25.1%)\n58 (21.2%)\n325 (24.3%)\n\n\nsoutheast\n273 (25.7%)\n91 (33.2%)\n364 (27.2%)\n\n\nsouthwest\n267 (25.1%)\n58 (21.2%)\n325 (24.3%)\n\n\nbmi\n\n\n\n\n\nMean (SD)\n30.7 (6.04)\n30.7 (6.32)\n30.7 (6.10)\n\n\nMedian [Min, Max]\n30.4 [16.0, 53.1]\n30.4 [17.2, 52.6]\n30.4 [16.0, 53.1]"
+  },
+  {
+    "objectID": "class3.html#nonlinearity",
+    "href": "class3.html#nonlinearity",
+    "title": "Class 3",
+    "section": "Nonlinearity",
+    "text": "Nonlinearity\n\n\nCode\nmodelNonlinear &lt;- lm(charges ~ age + I(age^2) + smoker + sex + region + bmi, data = ins)\nsummary(modelNonlinear)\n\n\n\nCall:\nlm(formula = charges ~ age + I(age^2) + smoker + sex + region + \n    bmi, data = ins)\n\nResiduals:\n     Min       1Q   Median       3Q      Max \n-11392.7  -2976.4   -889.7   1399.3  29893.5 \n\nCoefficients:\n                  Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)     -7959.9502  1673.5181  -4.756 2.19e-06 ***\nage                54.3396    77.7892   0.699  0.48496    \nI(age^2)            2.5799     0.9712   2.656  0.00799 ** \nsmoker          23873.5770   413.9010  57.679  &lt; 2e-16 ***\nsexmale          -111.7004   333.4999  -0.335  0.73773    \nregionnorthwest  -302.6170   476.9289  -0.635  0.52586    \nregionsoutheast -1037.8522   479.5590  -2.164  0.03063 *  \nregionsouthwest  -904.7631   478.6525  -1.890  0.05894 .  \nbmi               338.1341    28.6623  11.797  &lt; 2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 6073 on 1329 degrees of freedom\nMultiple R-squared:   0.75, Adjusted R-squared:  0.7485 \nF-statistic: 498.4 on 8 and 1329 DF,  p-value: &lt; 2.2e-16\n\n\nCode\nlibrary(splines)\nmodelNonlinear &lt;- lm(charges ~ ns(age, df=5) + smoker + sex + region + bmi, data = ins)\nsummary(modelNonlinear)\n\n\n\nCall:\nlm(formula = charges ~ ns(age, df = 5) + smoker + sex + region + \n    bmi, data = ins)\n\nResiduals:\n     Min       1Q   Median       3Q      Max \n-11710.5  -3034.1   -943.8   1424.4  29917.8 \n\nCoefficients:\n                 Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)      -6668.64    1029.19  -6.480 1.29e-10 ***\nns(age, df = 5)1  2469.48     935.37   2.640  0.00839 ** \nns(age, df = 5)2  5857.86    1034.36   5.663 1.82e-08 ***\nns(age, df = 5)3  8867.01     887.72   9.989  &lt; 2e-16 ***\nns(age, df = 5)4 13879.92    1449.51   9.576  &lt; 2e-16 ***\nns(age, df = 5)5 10589.53     816.34  12.972  &lt; 2e-16 ***\nsmoker           23905.65     414.54  57.667  &lt; 2e-16 ***\nsexmale           -115.47     333.31  -0.346  0.72907    \nregionnorthwest   -318.29     476.82  -0.668  0.50455    \nregionsoutheast  -1025.56     479.37  -2.139  0.03258 *  \nregionsouthwest   -925.60     478.59  -1.934  0.05332 .  \nbmi                338.71      28.65  11.821  &lt; 2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 6070 on 1326 degrees of freedom\nMultiple R-squared:  0.7509,    Adjusted R-squared:  0.7488 \nF-statistic: 363.3 on 11 and 1326 DF,  p-value: &lt; 2.2e-16\n\n\nCode\nanova(modelNonlinear)\n\n\nAnalysis of Variance Table\n\nResponse: charges\n                  Df     Sum Sq    Mean Sq   F value Pr(&gt;F)    \nns(age, df = 5)    5 1.8063e+10 3.6127e+09   98.0653 &lt;2e-16 ***\nsmoker             1 1.2387e+11 1.2387e+11 3362.4086 &lt;2e-16 ***\nsex                1 1.9614e+06 1.9614e+06    0.0532 0.8175    \nregion             3 1.4310e+08 4.7699e+07    1.2948 0.2747    \nbmi                1 5.1478e+09 5.1478e+09  139.7367 &lt;2e-16 ***\nResiduals       1326 4.8849e+10 3.6839e+07                     \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\nCode\nplot(modelNonlinear)"
+  },
+  {
+    "objectID": "class3.html#equal-variance-assumption",
+    "href": "class3.html#equal-variance-assumption",
+    "title": "Class 3",
+    "section": "Equal variance assumption",
+    "text": "Equal variance assumption\n\nUse Robust standard errors. Also called Heteroskedasticity consistent standard errors or sandwich standard errors.\n\n\n\nCode\nlibrary(sandwich)\nlibrary(car)\n\ncar::Anova(modelNonlinear)\n\n\nAnova Table (Type II tests)\n\nResponse: charges\n                    Sum Sq   Df   F value Pr(&gt;F)    \nns(age, df = 5) 1.7807e+10    5   96.6735 &lt;2e-16 ***\nsmoker          1.2251e+11    1 3325.5160 &lt;2e-16 ***\nsex             4.4215e+06    1    0.1200 0.7291    \nregion          2.2792e+08    3    2.0622 0.1034    \nbmi             5.1478e+09    1  139.7367 &lt;2e-16 ***\nResiduals       4.8849e+10 1326                     \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\nCode\ncar::Anova(modelNonlinear, vcov. = vcovHC)\n\n\nAnalysis of Deviance Table (Type II tests)\n\nResponse: charges\n                  Df         F Pr(&gt;F)    \nns(age, df = 5)    5   95.9979 &lt;2e-16 ***\nsmoker             1 1706.6078 &lt;2e-16 ***\nsex                1    0.1181 0.7311    \nregion             3    1.9870 0.1141    \nbmi                1  113.4421 &lt;2e-16 ***\nResiduals       1326                     \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+  },
+  {
+    "objectID": "class4.html",
+    "href": "class4.html",
+    "title": "Class 4: Logistic regression",
+    "section": "",
+    "text": "Interpret logistic regression coefficients.\nEvaluate"
+  },
+  {
+    "objectID": "class4.html#model",
+    "href": "class4.html#model",
+    "title": "Class 4: Logistic regression",
+    "section": "Model",
+    "text": "Model\nLogistic regression model predicts the log odds of the binary outcome (e.g., whether an individual is a smoker or not) as a linear combination of the predictor variables.\nThe model can be formulated as: \\[\n   \\text{logit}(p) = \\log\\left(\\frac{p}{1 - p}\\right) = \\beta_0 + \\beta_1 X_1 + \\beta_2 X_2 + \\ldots + \\beta_k X_k\n   \\] where: - $ p $ is the probability of the outcome (smoking = 1). - $ X_1, X_2, , X_k $ are the predictor variables (age, sex, region). - $ _0 $ is the intercept. - $ _1, _2, , _k $ are the coefficients for the predictors."
+  },
+  {
+    "objectID": "class4.html#intepreting-coefficients-on-the-log-odds-scale",
+    "href": "class4.html#intepreting-coefficients-on-the-log-odds-scale",
+    "title": "Class 4: Logistic regression",
+    "section": "Intepreting coefficients on the log-odds scale",
+    "text": "Intepreting coefficients on the log-odds scale\nEach coefficient $ _i $ represents the change in the log odds of the outcome for a one-unit increase in the corresponding predictor variable $ X_i $, holding all other predictors constant.\n\nFor continuous predictors (e.g., Age):\n\nIf $ _1 =-0.004$ (age): for every 1-year increase in age, the log odds of being a smoker increase by 0.05.\n\nFor categorical predictors (e.g., Sex and Region):\n\nIf $ _2 = 0.37$, then being male decreases the log odds of being a smoker by 1.5."
+  },
+  {
+    "objectID": "class4.html#interpreting-coefficients-on-the-odds-scale",
+    "href": "class4.html#interpreting-coefficients-on-the-odds-scale",
+    "title": "Class 4: Logistic regression",
+    "section": "Interpreting coefficients on the odds scale",
+    "text": "Interpreting coefficients on the odds scale\n\nTo convert the log odds to odds, we exponentiate: [ = e^{(p)} = e^{_0 + _1 X_1 + _2 X_2 + + _k X_k} ]\nOdds Ratio (OR):\n\nThe odds ratio for a one-unit increase in $ X_i $ is given by: [ = e^{_i} ]\nThis tells us how the odds of the outcome change with a one-unit increase in $ X_i $:\n\nIf $ &gt; 1 $, the odds of being a smoker increase (more likely).\nIf $ &lt; 1 $, the odds of being a smoker decrease (less likely).\nIf $ = 1 $, there is no change in the odds."
+  },
+  {
+    "objectID": "class4.html#example-interpretation",
+    "href": "class4.html#example-interpretation",
+    "title": "Class 4: Logistic regression",
+    "section": "Example Interpretation",
+    "text": "Example Interpretation"
+  },
+  {
+    "objectID": "class4.html#example-visualization",
+    "href": "class4.html#example-visualization",
+    "title": "Class 4: Logistic regression",
+    "section": "Example visualization",
+    "text": "Example visualization\n\n\nCode\n# Load necessary libraries\nlibrary(ggplot2)\nlibrary(dplyr)\n\n\n\nAttaching package: 'dplyr'\n\n\nThe following objects are masked from 'package:stats':\n\n    filter, lag\n\n\nThe following objects are masked from 'package:base':\n\n    intersect, setdiff, setequal, union\n\n\nCode\n# Create a new dataframe for predictions\nins$predicted_prob = predict(glmModel, type = \"link\")\n\n# Create a visualization of predicted probabilities against age\nggplot(ins, aes(x = age, y = predicted_prob, color = sex)) +\n  geom_point(alpha = 0.6) +\n  geom_smooth(method = \"loess\", se = FALSE, color = \"black\") +\n  labs(title = \"Predicted Probability of Smoking by Age\",\n       x = \"Age\",\n       y = \"Predicted Probability of Smoking\") +\n  theme_minimal()\n\n\n`geom_smooth()` using formula = 'y ~ x'"
+  },
+  {
+    "objectID": "class4.html#robust-standard-errors",
+    "href": "class4.html#robust-standard-errors",
+    "title": "Class 4: Logistic regression",
+    "section": "Robust standard errors",
+    "text": "Robust standard errors\nI like to use robust standard errors for testing whenever I can. They are also possible for the glm function.\n\n\nCode\nlibrary(sandwich) \nlibrary(lmtest)\n\n\nLoading required package: zoo\n\n\n\nAttaching package: 'zoo'\n\n\nThe following objects are masked from 'package:base':\n\n    as.Date, as.Date.numeric\n\n\nCode\ncoeftest(glmModel, vcov = vcovHC(glmModel))\n\n\n\nz test of coefficients:\n\n                  Estimate Std. Error z value  Pr(&gt;|z|)    \n(Intercept)     -1.3849614  0.2489932 -5.5622 2.663e-08 ***\nage             -0.0040477  0.0048665 -0.8318  0.405547    \nsexmale          0.3740334  0.1379369  2.7116  0.006695 ** \nregionnorthwest -0.1809358  0.2016442 -0.8973  0.369558    \nregionsoutheast  0.2401373  0.1844761  1.3017  0.193010    \nregionsouthwest -0.1821025  0.2004394 -0.9085  0.363605    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\nCode\ncar::Anova(glmModel, vcov = vcovHC(glmModel))\n\n\nWarning in Anova.glm(glmModel, vcov = vcovHC(glmModel)): test.statistic=\"LR\";\nvcov. argument ignored\n\n\nAnalysis of Deviance Table (Type II tests)\n\nResponse: smoker\n       LR Chisq Df Pr(&gt;Chisq)   \nage      0.6952  1   0.404413   \nsex      7.4892  1   0.006207 **\nregion   6.9548  3   0.073352 . \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
   }
 ]

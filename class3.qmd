@@ -144,12 +144,33 @@ hist(ins$charges)
 * Fit linear model with all variables from Table 1.
 * Create a model summary table.
 * Create and ANOVA table.
-* Interpret the results for age, smoking status, region.
 * Assess the overall model fit using $R^2$ and the model diagnostics plots we discussed in Class 2.
+* Interpret the results for age, smoking status, region.
+
+
+
+```{r}
+model <- lm(charges ~ age + sex + region + bmi + smoker, data = ins)
+#summary(model)
+sjPlot::tab_model(model)
+
+library(kableExtra)
+kable(anova(model), format='html', caption='ANOVA table', digits=2)
+```
+
+
+### Evaluate model fit
+
+```{r}
+plot(model)
+```
+
 
 ## Age Influence on Health Charges:
 
-To evaluate the effect of age on medical charges, perform a test of the linear age effect using a `XX` test and report the effect with the estimate, confidence interval, T-statistic, degrees of freedom, and $p$-value.
+To evaluate the effect of age on medical charges, we performed a test of the linear age effect using a T-test and report the effect with the estimate, confidence interval, T-statistic, degrees of freedom, and $p$-value.
+
+There was evidence that age was positive associated with medical charges (b=258.54, StdEr=11.94, $T=21.66$, $df=1300$, $p <0.001$).
 
 ## Influence of Smoking on Medical Expenses:
 
@@ -162,8 +183,40 @@ To evaluate the effect of age on medical charges, perform a test of the linear a
 
 ## **Combined Effects of Predictors:**
    
-*fill in your answer here*
+```{r}
+model <- lm(charges ~ age + smoker + sex + region + bmi + age * smoker, data = ins)
+summary(model)
+```
 
+
+# Relaxing assumptions
+
+
+## Nonlinearity
+
+```{r}
+modelNonlinear <- lm(charges ~ age + I(age^2) + smoker + sex + region + bmi, data = ins)
+summary(modelNonlinear)
+
+library(splines)
+modelNonlinear <- lm(charges ~ ns(age, df=5) + smoker + sex + region + bmi, data = ins)
+summary(modelNonlinear)
+anova(modelNonlinear)
+
+plot(modelNonlinear)
+```
+
+## Equal variance assumption
+
+* Use Robust standard errors. Also called Heteroskedasticity consistent standard errors or sandwich standard errors.
+
+```{r}
+library(sandwich)
+library(car)
+
+car::Anova(modelNonlinear)
+car::Anova(modelNonlinear, vcov. = vcovHC)
+```
 
 
 # Discussion
