@@ -221,4 +221,15 @@ This setup analyzes the effect of the continuous variable "age" on FEV using sim
 2. Homoskedasticity
 3. Normality (sort of)
 
+
+## What are the key take-aways from the analysis?
+
+* Smoking:
+* Age:
+
+**How can we improve the model?**
+
+
 ## Multiple regression
+
+
