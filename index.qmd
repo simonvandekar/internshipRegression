@@ -25,10 +25,17 @@ Objectives:
 
 Objectives:
 
+1. Adding nonlinearity in regression
+2. Robust covariance
+
 ## Day 9
 
 Objectives:
 
+1. Introducing logistic regression
+
 ## Day 10
 
 Objectives:
+
+1. ???

@@ -224,11 +224,15 @@ This setup analyzes the effect of the continuous variable "age" on FEV using sim
 
 ## What are the key take-aways from the analysis?
 
-* Smoking:
-* Age:
+* Smoking: Smokers have greater FEV
+* Age: FEV increases with age.
 
 **How can we improve the model?**
 
+* Including both smoking and age --
+* Relax the constant variance assumption -- 
+* Nonlinearity -- 
+* Normality -- 
 
 ## Multiple regression
 

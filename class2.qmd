@@ -261,10 +261,32 @@ plot(model_interaction$fitted.values, residuals(model_interaction), main = "Resi
 
 * Log transformation
 
-```{r}
+```{r, fig.height=5, fig.width=5}
+par(mfrow=c(2,1))
+hist(fev$fev, xlab='FEV', main='Histogram of FEV')
+hist(log(fev$fev), xlab='log(FEV)', main='Histogram of log(FEV)')
 # Log-transform the response and re-fit the model
 model_log <- lm(log(fev) ~ age + smoke + sex, data = fev)
 summary(model_log)
+
+ageGrid = ref_grid(model_log, at=list(age=seq(min(fev$age), max(fev$age), length.out=100)) )
+predictions <- emmeans(ageGrid, ~age)
+
+# Prepare data for plotting
+pred_plot_data <- as.data.frame(predictions)
+pred_plot_data[, c('emmean', 'lower.CL', 'upper.CL')] = exp(pred_plot_data[, c('emmean', 'lower.CL', 'upper.CL')])
+
+# Scatter plot with regression line
+ggplot() +
+  geom_point(data = fev, aes(x = age, y = fev, color = smoke), alpha = 0.5) +
+  geom_ribbon(data = pred_plot_data, aes(x = age, ymin = lower.CL, ymax = upper.CL), alpha = 0.7, fill = "grey") +
+  geom_line(data = pred_plot_data, aes(x = age, y = emmean), color = "red", linewidth = 1) +
+  labs(title = "FEV vs. Age with Regression Line", x = "Age", y = "FEV")
+
+par(mfrow=c(2,2), mgp=c(1.7,.7,0), lwd=1.5, lend=2,
+    cex.lab=1, cex.axis=1, cex.main=1,
+    mar=c(2.8,2.8,1.8,.2), bty='l', oma=c(0,0,2,0))
+plot(model_log)
 ```
 
 **New interpretation of parameters**:
@@ -301,7 +323,10 @@ Where:
 
 ### Robust (sandwich) standard errors
 
-We don't have to apply a transformation to get valid results when there is heteroskedasticity.
+* We don't have to apply a transformation to get valid results when there is heteroskedasticity.
+* The theory for this is a bit complicated.
+* These robust estimators can be a little unstable in small samples and with mixed models (random effects models)
+
 
 ```{r}
 library(sandwich)
@@ -310,7 +335,7 @@ library(sandwich)
 tab_model(model_interaction, vcov.fun = vcovHC(model_interaction))
 ```
 
-## Linearity
+# Linearity
 
 ## Polynomials
 
@@ -329,3 +354,10 @@ library(splines)
 model_spline <- lm(fev ~ ns(age, df = 3) + smoke + sex, data = fev)
 summary(model_spline)
 ```
+
+
+* Plot regression diagnostics for this.
+
+# Best model?
+
+* What's likely the most reasonable model fit?
