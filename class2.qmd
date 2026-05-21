@@ -63,6 +63,7 @@ model <- lm(fev ~ age + smoke, data = fev)
 summary(model)
 
 tab_model(model)
+anova(model)
 ```
 
 **Exercise:** Interpret the coefficients as described above. Use the coefficients table output to discuss individual predictors.
@@ -190,14 +191,20 @@ Now we investigate the interaction between age and smoking.
 ```{r}
 # Model with interaction
 model_interaction <- lm(fev ~ age * sex, data = fev)
+
+model_interaction_smoke <- lm(fev ~ age * sex + smoke, data = fev)
+
 summary(model_interaction)
+summary(model_interaction_smoke)
 ```
 
 * Interpretation of tests and type 2 sum of squares using `car::Anova`
 
 ```{r}
+anova(model_interaction_smoke)
+summary(aov(model_interaction_smoke))
 library(car)
-Anova(model_interaction, type = 2)
+Anova(model_interaction_smoke, type = 2)
 ```
 
 # Assumptions

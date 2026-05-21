@@ -57,23 +57,27 @@ We'll follow the outline of a paper:
 Let's use the insurance dataset to investigate the following questions.
 
 1. **Age Influence on Health Charges:**
-   - How does age affect medical charges, and is the relationship linear, or do older age groups experience disproportionately higher charges?
+   - How does age affect medical charges? is the relationship linear or nonlinear?
 2. **Influence of Smoking on Medical Expenses:**
    - How does smoking status influence medical charges, and are smokers subjected to significantly higher health-related expenses compared to non-smokers?
-3. **Regional Variations in Healthcare Charges:**
+3. **Does smoking affect the charges age trajectory:** Is there evidence that smoking changes the effect of age on charges?
+4. **Regional Variations in Healthcare Charges:**
    - Are there regional differences in medical charges, and how do regional factors potentially contribute to the variation in healthcare costs?
-4. **Combined Effects of Predictors:**
+5. **BMI:**
+   - Does BMI relate to insurance charges? Is it nonlinear?
+6. **Combined Effects of Predictors:**
    - What does the relationship between each variable look like after controlling for the others? **Hint:** Use added variable plots.
    - Does smoking status affect the influence of age on medical charges?
-
 
 # Methods
 
 **Describe the overall strategy:**
 
-For all study aims, we will use a linear regression model for charges, including age, sex, region, bmi, smoking status as covariates.
-We will use histograms, boxplots, scatter plots, and Table 1 to understand the distributions of the covariates with the outcome.
-We will evaluate the effect of each variable using T-tests, F-test, and include added variable plots to visualize the unique contribution of each variable.
+* For all study aims, use charges as the outcome including age, sex, region, bmi, and smoking status as covariates (independent variables).
+* **We want to know about the effect of each variable controlling for the others.**
+* Use histograms, boxplots, scatter plots, and Table 1 to understand the distributions of the outcome and the relationship between the outcome and covariates.
+* Evaluate the effect of each variable using T-tests, F-tests. Use a single model, or a sequence of model comparisons.
+* You can use added variable plots to visualize the unique contribution of each variable.
 
 **Variables to include in Table 1:**
 
@@ -85,21 +89,31 @@ We will evaluate the effect of each variable using T-tests, F-test, and include 
 * Smoking status
 
 
+**Consider using these tools**
+
+* Regression diagnostic plots.
+* Transforming the outcome (e.g. `log` transformation)
+* Allowing for nonlinearity of continuous terms.
+* Robust standard errors (in the `car` package, `Ancova(model, vcov.=vcovHC, type=2)`)
+
 Then describe the specific strategy for each research question. Create the results below.
 
 1. **Age Influence on Health Charges:**
    - To evaluate the effect of age on medical charges, we will test the linear age effect using a T-test and report the effect with the estimate, confidence interval, T-statistic, degrees of freedom, and $p$-value.
-   - To evaluate the linearity of the relationship, we will create a scatter plot of charges versus age with a best fit line from the model.
-   - Testing the slope for age and if the sign of the slope is positive will evaluate if older ages experience higher charges.
+   - To evaluate the linearity of the relationship, we will test for a nonlinear effect over the linear effect.
 2. **Influence of Smoking on Medical Expenses:**
-   - To evaluate the effect of smoking status on medical charges, we will test smoking effect using a T-test and report the effect with the estimate, confidence interval, T-statistic, degrees of freedom, and $p$-value.
-   - Testing the coefficient for smoking and if the sign of the slope is positive will evaluate if older ages experience higher charges.
-3. **Regional Variations in Healthcare Charges:**
-   - We will perform an F-test to assess regional differences. To understand how regions differ, we could create a plot (`emmeans`) and we can do *post hoc* tests.
-4. **Combined Effects of Predictors:**
+   - To evaluate the effect of smoking status on medical charges, we will ...
+   - Testing the coefficient for smoking.
+3. **Smoking effect on age effect**
+  - To evaluate the effect of smoking on the age effect, we ...
+  - To understand how the age effect differs, we used `emmeans`
+4. **Regional Variations in Healthcare Charges:**
+   - We will perform an ____ to assess regional differences in charges.
+   - To understand how regions differ, we create a plot (use `emmeans`)
+5. **BMI:**
+6. **Combined Effects of Predictors:**
    - Added variable plots.
    - $R^2$
-   - Add a smoking by age interaction. We can use a T or F-test to test the interaction.
 
 
 # Results
@@ -112,11 +126,7 @@ Describe the specific strategy for each research question and perform the analys
 ## Add Table 1:
 
 ```{r}
-library(tableone)
 library(table1)
-
-CreateTableOne(vars = c('charges', 'age,', 'sex', 'region', 'bmi'), 'smoker', data=ins)
-
 table1(~charges + age + sex + region + bmi | smoker, data=ins, caption='Demographics stratified by smoking status.' )
 ```
 
@@ -124,46 +134,21 @@ table1(~charges + age + sex + region + bmi | smoker, data=ins, caption='Demograp
 
 
 ```{r}
-library(ggplot2)
-
-# charges by smoking
-ggplot(data = ins) + geom_boxplot(mapping = aes(x = as.character(smoker), y = charges))
-# charges by age and smoking
-ggplot(data = ins) + geom_point(mapping = aes(x = age, y = charges, color = smoker))
-
-# charges by region
-ggplot(data = ins, mapping = aes(x = region, y = charges)) + geom_boxplot()
-
-hist(ins$charges)
+hist(ins$charges, main='Histogram of insurance charges', xlab='Charges')
 ```
 
-
-
-### To-do before class June 2
-
-* Fit linear model with all variables from Table 1.
-* Create a model summary table.
-* Create and ANOVA table.
-* Assess the overall model fit using $R^2$ and the model diagnostics plots we discussed in Class 2.
-* Interpret the results for age, smoking status, region.
-
-
-
-```{r}
-model <- lm(charges ~ age + sex + region + bmi + smoker, data = ins)
-#summary(model)
-sjPlot::tab_model(model)
-
-library(kableExtra)
-kable(anova(model), format='html', caption='ANOVA table', digits=2)
-```
 
 
 ### Evaluate model fit
 
-```{r}
-plot(model)
-```
+Does anything need to change about the model you fit?
+
+## Model results
+
+It usually makes sense to report all coefficients, tests, confidence intervals, degrees of freedom, and $p$-values in a table and refer to the table.
+
+* Create a "summary" table with all coefficients in the model.
+* Create an anova table with type 2 sum of squares testing all effects in the model.
 
 
 ## Age Influence on Health Charges:
@@ -174,49 +159,17 @@ There was evidence that age was positive associated with medical charges (b=258.
 
 ## Influence of Smoking on Medical Expenses:
 
-*fill in your answer here*
+*Interpret the smoking effect here*
 
+
+## Smoking effect on age association
+
+*Interpret the smoking effect on the age effect here*
 
 ## Regional Variations in Healthcare Charges:
 
-*fill in your answer here*
+*Interpret the regional differences in healthcare charges here*
 
-## **Combined Effects of Predictors:**
-   
-```{r}
-model <- lm(charges ~ age + smoker + sex + region + bmi + age * smoker, data = ins)
-summary(model)
-```
-
-
-# Relaxing assumptions
-
-
-## Nonlinearity
-
-```{r}
-modelNonlinear <- lm(charges ~ age + I(age^2) + smoker + sex + region + bmi, data = ins)
-summary(modelNonlinear)
-
-library(splines)
-modelNonlinear <- lm(charges ~ ns(age, df=5) + smoker + sex + region + bmi, data = ins)
-summary(modelNonlinear)
-anova(modelNonlinear)
-
-plot(modelNonlinear)
-```
-
-## Equal variance assumption
-
-* Use Robust standard errors. Also called Heteroskedasticity consistent standard errors or sandwich standard errors.
-
-```{r}
-library(sandwich)
-library(car)
-
-car::Anova(modelNonlinear)
-car::Anova(modelNonlinear, vcov. = vcovHC)
-```
 
 
 # Discussion
