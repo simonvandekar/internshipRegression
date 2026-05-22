@@ -563,6 +563,190 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="age-influence-on-health-charges">Age Influence on Health Charges:</h2>
 <p>To evaluate the effect of age on medical charges, we performed a test of the linear age effect using a T-test and report the effect with the estimate, confidence interval, T-statistic, degrees of freedom, and <span class="math inline">\(p\)</span>-value.</p>
 <p>There was evidence that age was positive associated with medical charges (b=258.54, StdEr=11.94, <span class="math inline">\(T=21.66\)</span>, <span class="math inline">\(df=1300\)</span>, <span class="math inline">\(p &lt;0.001\)</span>).</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>linear <span class="ot">&lt;-</span> <span class="fu">lm</span>(ins<span class="sc">$</span>charges <span class="sc">~</span> ins<span class="sc">$</span>age)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ins<span class="sc">$</span>charges <span class="sc">~</span> ins<span class="sc">$</span>age)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(linear)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="class3_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Color-code by smoker status</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>colors <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(ins<span class="sc">$</span>smoker <span class="sc">==</span> <span class="dv">1</span>, <span class="st">"red"</span>, <span class="st">"blue"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot with colors</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ins<span class="sc">$</span>charges <span class="sc">~</span> ins<span class="sc">$</span>age, <span class="at">col =</span> colors, <span class="at">pch =</span> <span class="dv">19</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Age"</span>, <span class="at">ylab =</span> <span class="st">"Charges"</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Insurance Charges by Age and Smoking Status"</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Separate regression lines</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>smokers    <span class="ot">&lt;-</span> ins[ins<span class="sc">$</span>smoker <span class="sc">==</span> <span class="dv">1</span>, ]</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>nonsmokers <span class="ot">&lt;-</span> ins[ins<span class="sc">$</span>smoker <span class="sc">==</span> <span class="dv">0</span>, ]</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">lm</span>(charges <span class="sc">~</span> age, <span class="at">data =</span> smokers),    <span class="at">col =</span> <span class="st">"red"</span>,  <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">lm</span>(charges <span class="sc">~</span> age, <span class="at">data =</span> nonsmokers), <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Legend</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Smoker"</span>, <span class="st">"Non-smoker"</span>),</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"blue"</span>), <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="class3_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>loglinear <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(charges) <span class="sc">~</span> age <span class="sc">+</span> smoker, <span class="at">data=</span>ins)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>logpoly <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(charges) <span class="sc">~</span> <span class="fu">poly</span>(age, <span class="dv">3</span>) <span class="sc">+</span> smoker, <span class="at">data=</span>ins)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>logpolyInt <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(charges) <span class="sc">~</span> <span class="fu">poly</span>(age, <span class="dv">3</span>) <span class="sc">*</span> smoker, <span class="at">data=</span>ins)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(logpoly)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Anova Table (Type II tests)
+
+Response: log(charges)
+             Sum Sq   Df F value    Pr(&gt;F)    
+poly(age, 3) 342.16    3  528.57 &lt; 2.2e-16 ***
+smoker       518.92    1 2404.91 &lt; 2.2e-16 ***
+Residuals    287.63 1333                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(logpoly)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = log(charges) ~ poly(age, 3) + smoker, data = ins)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.88170 -0.20977 -0.04150  0.07456  2.21641 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)    8.78239    0.01424 616.616  &lt; 2e-16 ***
+poly(age, 3)1 18.31746    0.46466  39.421  &lt; 2e-16 ***
+poly(age, 3)2 -2.56315    0.46454  -5.518 4.12e-08 ***
+poly(age, 3)3  0.48804    0.46470   1.050    0.294    
+smoker         1.54440    0.03149  49.040  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.4645 on 1333 degrees of freedom
+Multiple R-squared:  0.7456,    Adjusted R-squared:  0.7448 
+F-statistic: 976.5 on 4 and 1333 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sjPlot<span class="sc">::</span><span class="fu">tab_model</span>(logpoly)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: normal; font-weight: bold; padding: 0.2cm;">&nbsp;</th>
+<th colspan="3" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: normal; font-weight: bold; padding: 0.2cm;">log(charges)</th>
+</tr>
+<tr class="even">
+<td style="text-align: center; border-bottom: 1px solid; font-style: italic; font-weight: normal;">Predictors</td>
+<td style="text-align: center; border-bottom: 1px solid; font-style: italic; font-weight: normal;">Estimates</td>
+<td style="text-align: center; border-bottom: 1px solid; font-style: italic; font-weight: normal;">CI</td>
+<td style="text-align: center; border-bottom: 1px solid; font-style: italic; font-weight: normal;">p</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">(Intercept)</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">8.78</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">8.75&nbsp;–&nbsp;8.81</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;"><strong>&lt;0.001</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">age [1st degree]</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">18.32</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">17.41&nbsp;–&nbsp;19.23</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;"><strong>&lt;0.001</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">age [2nd degree]</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">-2.56</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">-3.47&nbsp;–&nbsp;-1.65</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;"><strong>&lt;0.001</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">age [3rd degree]</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">0.49</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">-0.42&nbsp;–&nbsp;1.40</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">0.294</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">smoker</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">1.54</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">1.48&nbsp;–&nbsp;1.61</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;"><strong>&lt;0.001</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top; padding-top: 0.1cm; padding-bottom: 0.1cm; border-top: 1px solid;">Observations</td>
+<td colspan="3" style="text-align: left; padding: 0.2cm; vertical-align: top; padding-top: 0.1cm; padding-bottom: 0.1cm; border-top: 1px solid;">1338</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top; padding-top: 0.1cm; padding-bottom: 0.1cm;">R<sup>2</sup> / R<sup>2</sup> adjusted</td>
+<td colspan="3" style="text-align: left; padding: 0.2cm; vertical-align: top; padding-top: 0.1cm; padding-bottom: 0.1cm;">0.746 / 0.745</td>
+</tr>
+</tbody>
+</table>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get predictions for both smoker groups</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>ageGrid <span class="ot">&lt;-</span> <span class="fu">ref_grid</span>(logpolyInt, <span class="at">at =</span> <span class="fu">list</span>(<span class="at">age =</span> <span class="fu">seq</span>(<span class="fu">min</span>(ins<span class="sc">$</span>age), <span class="fu">max</span>(ins<span class="sc">$</span>age), <span class="at">length.out =</span> <span class="dv">100</span>)))</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">emmeans</span>(ageGrid, <span class="sc">~</span> age <span class="sc">|</span> smoker))</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Back-transform to original scale for BOTH groups</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>predictions[, <span class="fu">c</span>(<span class="st">'emmean'</span>, <span class="st">'lower.CL'</span>, <span class="st">'upper.CL'</span>)] <span class="ot">&lt;-</span> </span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">exp</span>(predictions[, <span class="fu">c</span>(<span class="st">'emmean'</span>, <span class="st">'lower.CL'</span>, <span class="st">'upper.CL'</span>)])</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Make smoker a factor for clean labels</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>predictions<span class="sc">$</span>smoker <span class="ot">&lt;-</span> <span class="fu">factor</span>(predictions<span class="sc">$</span>smoker, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Non-smoker"</span>, <span class="st">"Smoker"</span>))</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>ins<span class="sc">$</span>smoker_f       <span class="ot">&lt;-</span> <span class="fu">factor</span>(ins<span class="sc">$</span>smoker,         <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Non-smoker"</span>, <span class="st">"Smoker"</span>))</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot both groups</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>ins<span class="sc">$</span>region <span class="ot">=</span> <span class="fu">as.factor</span>(ins<span class="sc">$</span>region)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> ins, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> charges, <span class="at">color =</span> region), <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data =</span> predictions, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">ymin =</span> lower.CL, <span class="at">ymax =</span> upper.CL, <span class="at">fill =</span> smoker), <span class="at">alpha =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> predictions, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> emmean, <span class="at">color =</span> smoker), <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"northeast"</span> <span class="ot">=</span> <span class="st">"blue"</span>, <span class="st">"northwest"</span> <span class="ot">=</span> <span class="st">"red"</span>, <span class="st">'southeast'</span> <span class="ot">=</span> <span class="st">"yellow"</span>, <span class="st">'southwest'</span><span class="ot">=</span><span class="st">'green'</span>)) <span class="sc">+</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"northeast"</span> <span class="ot">=</span> <span class="st">"blue"</span>, <span class="st">"northwest"</span> <span class="ot">=</span> <span class="st">"red"</span>, <span class="st">'southeast'</span> <span class="ot">=</span> <span class="st">"yellow"</span>, <span class="st">'southwest'</span><span class="ot">=</span><span class="st">'green'</span>)) <span class="sc">+</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Charges vs. Age: Smoking × Age Interaction"</span>,</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Cubic polynomial interaction (log-scale model, back-transformed)"</span>,</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Age"</span>, <span class="at">y =</span> <span class="st">"Charges"</span>,</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Smoking Status"</span>, <span class="at">fill =</span> <span class="st">"Smoking Status"</span>) <span class="sc">+</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="class3_files/figure-html/unnamed-chunk-5-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="influence-of-smoking-on-medical-expenses" class="level2">
 <h2 class="anchored" data-anchor-id="influence-of-smoking-on-medical-expenses">Influence of Smoking on Medical Expenses:</h2>

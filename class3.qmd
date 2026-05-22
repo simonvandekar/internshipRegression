@@ -159,6 +159,9 @@ There was evidence that age was positive associated with medical charges (b=258.
 
 
 ```{r}
+library(car)
+library(emmeans)
+library(ggplot2)
 linear <- lm(ins$charges ~ ins$age)
 plot(ins$charges ~ ins$age)
 abline(linear)
