@@ -347,15 +347,33 @@ tab_model(model_interaction, vcov.fun = vcovHC(model_interaction))
 ## Polynomials
 
 ```{r}
+polyAge = poly(fev$age, 5)
+plotData = as.data.frame(cbind(fev$age, polyAge))
+names(plotData) = c('Age', 'polyTerm1', 'polyTerm2', 'polyTerm3', 'polyTerm4' ,'polyTerm5')
+plot(plotData)
+
 # Polynomial term for age
-model_poly <- lm(fev ~ poly(age, 2) + smoke + sex, data = fev)
+model_poly <- lm(fev ~ poly(age, 5) + smoke + sex, data = fev)
+# linear model
+model_linear <- lm(fev ~ age + smoke + sex, data = fev)
 summary(model_poly)
+library(car)
+Anova(model_poly)
+# allow you to directly compare these models
+# smaller model is called the reduced model
+anova(model_linear, model_poly)
+
 ```
 
 ## Splines
 
 ```{r}
 library(splines)
+
+nsAge = ns(fev$age, df=5)
+plotData = as.data.frame(cbind(fev$age, nsAge))
+names(plotData) = c('Age', 'nsTerm1', 'nsTerm2', 'nsTerm3', 'nsTerm4' ,'nsTerm5')
+plot(plotData)
 
 # Fit a model using natural splines
 model_spline <- lm(fev ~ ns(age, df = 3) + smoke + sex, data = fev)

@@ -1060,32 +1060,85 @@ F-statistic: 355.1 on 3 and 650 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Polynomial term for age</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>model_poly <span class="ot">&lt;-</span> <span class="fu">lm</span>(fev <span class="sc">~</span> <span class="fu">poly</span>(age, <span class="dv">2</span>) <span class="sc">+</span> smoke <span class="sc">+</span> sex, <span class="at">data =</span> fev)</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_poly)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>polyAge <span class="ot">=</span> <span class="fu">poly</span>(fev<span class="sc">$</span>age, <span class="dv">5</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>plotData <span class="ot">=</span> <span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(fev<span class="sc">$</span>age, polyAge))</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(plotData) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">'Age'</span>, <span class="st">'polyTerm1'</span>, <span class="st">'polyTerm2'</span>, <span class="st">'polyTerm3'</span>, <span class="st">'polyTerm4'</span> ,<span class="st">'polyTerm5'</span>)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(plotData)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="class2_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Polynomial term for age</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>model_poly <span class="ot">&lt;-</span> <span class="fu">lm</span>(fev <span class="sc">~</span> <span class="fu">poly</span>(age, <span class="dv">5</span>) <span class="sc">+</span> smoke <span class="sc">+</span> sex, <span class="at">data =</span> fev)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co"># linear model</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>model_linear <span class="ot">&lt;-</span> <span class="fu">lm</span>(fev <span class="sc">~</span> age <span class="sc">+</span> smoke <span class="sc">+</span> sex, <span class="at">data =</span> fev)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_poly)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-lm(formula = fev ~ poly(age, 2) + smoke + sex, data = fev)
+lm(formula = fev ~ poly(age, 5) + smoke + sex, data = fev)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
--1.40214 -0.35307 -0.03349  0.32630  1.93284 
+-1.51144 -0.33449 -0.02497  0.33718  1.92539 
 
 Coefficients:
                     Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)          2.48338    0.03165  78.467  &lt; 2e-16 ***
-poly(age, 2)1       16.95796    0.58876  28.803  &lt; 2e-16 ***
-poly(age, 2)2       -2.30190    0.54295  -4.240 2.56e-05 ***
-smokecurrent smoker -0.10214    0.07794  -1.310    0.191    
-sexmale              0.31834    0.04217   7.549 1.49e-13 ***
+(Intercept)          2.48353    0.03124  79.496  &lt; 2e-16 ***
+poly(age, 5)1       17.03124    0.58131  29.298  &lt; 2e-16 ***
+poly(age, 5)2       -2.27557    0.53538  -4.250 2.45e-05 ***
+poly(age, 5)3       -2.17917    0.53142  -4.101 4.65e-05 ***
+poly(age, 5)4        0.94461    0.53056   1.780   0.0755 .  
+poly(age, 5)5        0.69202    0.52919   1.308   0.1914    
+smokecurrent smoker -0.12636    0.07753  -1.630   0.1036    
+sexmale              0.32273    0.04161   7.755 3.44e-14 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 0.5362 on 649 degrees of freedom
-Multiple R-squared:  0.6199,    Adjusted R-squared:  0.6175 
-F-statistic: 264.6 on 4 and 649 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 0.5286 on 646 degrees of freedom
+Multiple R-squared:  0.6323,    Adjusted R-squared:  0.6283 
+F-statistic: 158.7 on 7 and 646 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(model_poly)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Anova Table (Type II tests)
+
+Response: fev
+              Sum Sq  Df  F value    Pr(&gt;F)    
+poly(age, 5) 255.385   5 182.7725 &lt; 2.2e-16 ***
+smoke          0.742   1   2.6562    0.1036    
+sex           16.808   1  60.1445 3.444e-14 ***
+Residuals    180.529 646                       
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># allow you to directly compare these models</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="co"># smaller model is called the reduced model</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model_linear, model_poly)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: fev ~ age + smoke + sex
+Model 2: fev ~ poly(age, 5) + smoke + sex
+  Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+1    650 191.78                                  
+2    646 180.53  4    11.255 10.069 6.549e-08 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 </section>
@@ -1094,11 +1147,25 @@ F-statistic: 264.6 on 4 and 649 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(splines)</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a model using natural splines</span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>model_spline <span class="ot">&lt;-</span> <span class="fu">lm</span>(fev <span class="sc">~</span> <span class="fu">ns</span>(age, <span class="at">df =</span> <span class="dv">3</span>) <span class="sc">+</span> smoke <span class="sc">+</span> sex, <span class="at">data =</span> fev)</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_spline)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(splines)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>nsAge <span class="ot">=</span> <span class="fu">ns</span>(fev<span class="sc">$</span>age, <span class="at">df=</span><span class="dv">5</span>)</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>plotData <span class="ot">=</span> <span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(fev<span class="sc">$</span>age, nsAge))</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(plotData) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">'Age'</span>, <span class="st">'nsTerm1'</span>, <span class="st">'nsTerm2'</span>, <span class="st">'nsTerm3'</span>, <span class="st">'nsTerm4'</span> ,<span class="st">'nsTerm5'</span>)</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(plotData)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="class2_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a model using natural splines</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>model_spline <span class="ot">&lt;-</span> <span class="fu">lm</span>(fev <span class="sc">~</span> <span class="fu">ns</span>(age, <span class="at">df =</span> <span class="dv">3</span>) <span class="sc">+</span> smoke <span class="sc">+</span> sex, <span class="at">data =</span> fev)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_spline)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>

@@ -11,8 +11,16 @@ format:
 
 # Objectives
 
-- Interpret logistic regression coefficients.
-- Evaluate
+- Prepping for presentations today
+- Interpret logistic regression coefficients
+- Evaluating model fit
+
+# Presentations
+
+- 1 slide/minute (including introduction)
+- Better too short than too long, leave time for questions
+- Describe figures very slowly -- Biostatistics covers diverse topics and our knowledge about different fields don't overlap
+
 
 # Logistic regression
 
@@ -32,7 +40,11 @@ Logistic regression model predicts the log odds of the binary outcome (e.g., whe
 
 The model can be formulated as:
 $$   \text{logit}(p) = \log\left(\frac{p}{1 - p}\right) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k
-   $$ where: - \$ p \$ is the probability of the outcome (smoking = 1). - \$ X_1, X_2, \ldots, X_k \$ are the predictor variables (age, sex, region). - \$ \beta\_0 \$ is the intercept. - \$ \beta\_1, \beta\_2, \ldots, \beta\_k \$ are the coefficients for the predictors.
+   $$ where:
+   - \$ p \$ is the probability of the outcome (smoking = 1). 
+   - \$ X_1, X_2, \ldots, X_k \$ are the predictor variables (age, sex, region). 
+   - \$ \beta\_0 \$ is the intercept. 
+   - \$ \beta\_1, \beta\_2, \ldots, \beta\_k \$ are the coefficients for the predictors.
 
 ## Intepreting coefficients on the log-odds scale
 
