@@ -1,0 +1,84 @@
+---
+title: "Class 5: Random effects regression crash course"
+editor: source
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    code-fold: true
+---
+
+# Objectives
+
+- Crash course on the concepts of random effects regression
+
+# Recap of parameters
+
+What is a parameter, estimator, and estimate?
+
+* $\mu$ - Hypothetical concept of the true value in a population.
+* $\bar X$ - hypothetical concept of a random variable sampled repeatedly from a population with parameter $\mu$
+* $\bar x$ - observed value.
+
+# Terminology and concepts
+
+- **Who**
+    + Random effects
+    + Mixed effects
+    + Mixed model
+    + Multilevel model
+- **What?**
+    + Some objects the model tries to "estimate" are not parameters.
+    + These terms can be thought to be sampled from a population.
+    + These are the random effects terms or "predictions."
+- **When? (Purpose)**
+    + To handle correlation among repeated measurements of the same outcome from the same observations.
+    + To account for spatial/temporal correlation among measurements measured over space and/or time.
+- **Why?**
+    + When we analyze the data, we don't care specifically about the interpretation for the specific objects we sampled -- we want to learn about the population they are sampled from.
+- **How?**
+    + In `R`, `lme4` and `nlme` are the two most popular packages, but there are others with different flexibility.
+
+
+# Random effects model description
+
+- I'm going to analyze the [RBC](https://reprobrainchart.github.io/) data as an example.
+- These data were collected across fives sites. The sites can be thought of as being sampled from a population of all possible study sites. We want to learn about associations across all possible sites (not the five sites in the study).
+- The most basic linear random effects model is
+$$
+Y_{ij} = X_{ij}\beta + \gamma_{i} + \epsilon_{ij}
+$$
+    + For $i=1, \ldots, 5$ sites
+    + For $j =1, \ldots, n_i$ individuals sampled from each site
+    + $\beta$ are the "fixed effects" terms
+    + $\gamma\sim N(0, \tau^2)$ is a random effect "intercept"
+    + $\epsilon_{ij} \sim N(0, \sigma^2)$ is an error term
+
+
+**Some questions to answer:**
+- Why can this be called multilevel?
+- How is $\gamma_i$ different than $\beta$?
+- How does this allow observations to be correlated within site?
+
+
+# Random effects analysis in the RBC
+
+In the RBC, let's model
+
+```{r}
+library(lme4)
+library(lmerTest)
+library(sjPlot)
+
+rbc = read.csv('~/OneDrive - VUMC/teaching/SMN/data/rbc/regional_GMV_all_sites_unharmonized.csv')
+rbc$lh_superiorfrontal_cm = rbc$lh_superiorfrontal/1000
+supFron = lmer(lh_superiorfrontal_cm ~ age + sex + (1 | study_site), data=rbc)
+tab_model(supFron)
+```
+
+
+## In your data
+
+Do you have repeated measurements from the same participants? Some times you will need a random effects model to correctly model the data.
+

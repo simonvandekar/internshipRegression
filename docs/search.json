@@ -390,5 +390,19 @@
     "title": "Class 3",
     "section": "Equal variance assumption",
     "text": "Equal variance assumption\n\nUse Robust standard errors. Also called Heteroskedasticity consistent standard errors or sandwich standard errors.\n\n\n\nCode\nlibrary(sandwich)\nlibrary(car)\n\ncar::Anova(modelNonlinear)\n\n\nAnova Table (Type II tests)\n\nResponse: charges\n                    Sum Sq   Df   F value Pr(&gt;F)    \nns(age, df = 5) 1.7807e+10    5   96.6735 &lt;2e-16 ***\nsmoker          1.2251e+11    1 3325.5160 &lt;2e-16 ***\nsex             4.4215e+06    1    0.1200 0.7291    \nregion          2.2792e+08    3    2.0622 0.1034    \nbmi             5.1478e+09    1  139.7367 &lt;2e-16 ***\nResiduals       4.8849e+10 1326                     \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\nCode\ncar::Anova(modelNonlinear, vcov. = vcovHC)\n\n\nAnalysis of Deviance Table (Type II tests)\n\nResponse: charges\n                  Df         F Pr(&gt;F)    \nns(age, df = 5)    5   95.9979 &lt;2e-16 ***\nsmoker             1 1706.6078 &lt;2e-16 ***\nsex                1    0.1181 0.7311    \nregion             3    1.9870 0.1141    \nbmi                1  113.4421 &lt;2e-16 ***\nResiduals       1326                     \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+  },
+  {
+    "objectID": "class5.html",
+    "href": "class5.html",
+    "title": "Class 5: Random effects regression crash course",
+    "section": "",
+    "text": "Crash course on the concepts of random effects regression"
+  },
+  {
+    "objectID": "class5.html#in-your-data",
+    "href": "class5.html#in-your-data",
+    "title": "Class 5: Random effects regression crash course",
+    "section": "In your data",
+    "text": "In your data\nDo you have repeated measurements from the same participants? Some times you will need a random effects model to correctly model the data."
   }
 ]
