@@ -82,3 +82,6 @@ tab_model(supFron)
 
 Do you have repeated measurements from the same participants? Some times you will need a random effects model to correctly model the data.
 
+
+* Some of you have spatial data, so you need account for dependence among spatially proximal counties
+* Some of you have count data, so you need to use a generalized linear model using `glmer` in `R`
